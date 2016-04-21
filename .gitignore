@@ -1,0 +1,13 @@
+# Vim temporaries
+.*.swp
+
+# LaTeX files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+
+# LaTeX output
+*.pdf
