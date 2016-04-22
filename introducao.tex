@@ -1,0 +1,33 @@
+\section{Introdução e notação usada}
+
+\begin{definition}
+    Uma \emph{árvore binária}
+    é ou um único nó externo,
+    ou um nó interno,
+    que é uma estrutura que contém duas outras árvores
+    (a subárvore esquerda e a subárvore direita)
+    \cite[p.~257]{SedgewickFlajolet2013}.
+\end{definition}
+
+Árvores binárias são o mais simples tipo de árvore
+estudados pela Ciência da Computação.
+Nas aplicações,
+tipicamente ``penduramos'' alguma informação nos nós internos da árvore
+e usamos a estrutura da árvore para impor uma relação entre essas informações.
+Os nós externos costumam não carregar informação:
+eles são usados apenas para simplificar a definição de ``árvore''
+--- por exemplo,
+em vez de dizer que certo nodo ``não possui uma subárvore esquerda'',
+nós dizemos que a subárvore esquerda é um nó externo.
+Podemos, por exemplo,
+implementar o nó externo como \texttt{null}.
+Neste artigo,
+desprezaremos a existência desses nós externos
+e nos referiremos aos nós internos simplesmente por ``nó'' (ou ``nodo'').
+Assim, por exemplo,
+uma árvore que só contém um único nó externo
+será considerada ``vazia'', ou ``inexistente'' se for subárvore.
+Também excluiremos-nos das contagens;
+portanto, consideraremos que
+uma árvore que é um nó interdo cujas duas subárvores são nós externos
+tem apenas um nó.
