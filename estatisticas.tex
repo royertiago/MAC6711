@@ -6,8 +6,8 @@ Na construção de uma árvore binária de busca
 a partir de uma permutação de $(1, \dots, n)$,
 após adicionamos o primeiro número como a raíz,
 a adição dos próximos elementos colocará
-todos os números menores que a raíz na subárvore à esquerda
-e todos os números maiores que a raíz na subárvore à direita.
+todos os números menores que a raíz na subárvore esquerda
+e todos os números maiores que a raíz na subárvore direita.
 Na análise, portanto,
 precisaremos particionar uma permutação nestes dois subconjuntos.
 Assim,
@@ -18,10 +18,10 @@ e provaremos dois lemas que serão usados para facilitar sua manipulação.
 Por exemplo, se a permutação $\sigma$ corresponde a lista $(4, 5, 3, 6, 1, 2)$,
 ao construírmos uma árvore a partir de $\sigma$,
 $\sigma(1) = 4$ será a raíz,
-a subárvore à esquerda será a árvore construída a partir da lista $(3, 1, 2)$,
-e a subárvore à direita, da lista $(5, 6)$.
+a subárvore esquerda será a árvore construída a partir da lista $(3, 1, 2)$,
+e a subárvore direita, da lista $(5, 6)$.
 Como o valor dos nós da árvore não é relevante (apenas seu valor relativo é),
-podemos supor que a subárvore à direita foi gerada pela lista $(1, 2)$,
+podemos supor que a subárvore direita foi gerada pela lista $(1, 2)$,
 que é a mesma lista,
 mas ``normalizada'' para o intervalo $[1, 2]$.
 Chamaremos a lista $(3, 1, 2)$,
@@ -118,7 +118,7 @@ O seguinte lema diz como.
     (basta escolher, por exemplo,
     a sequência $(k+1, \tau(1), \dots, \tau(k), k+2, k+3, \dots, n)$);
     portanto,
-    a forma do somatório à esquerda da equação~\ref{eq:sum-partitions} está certa.
+    a forma do somatório esquerda da equação~\ref{eq:sum-partitions} está certa.
     Falta verificar a constante $(n-1)!/k!$ de cada termo.
 
     Esta constante refere-se a quantas permutações $\sigma \in S_n$
