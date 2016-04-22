@@ -1,0 +1,19 @@
+\section{Propriedades Estatísticas de Árvores Binárias Aleatórias}
+
+\subsection{Altura média de uma árvore de busca binária}
+
+(A demonstração construída nesta seção é adaptada do livro de Cormen et al.%
+~\cite[p.~300]{CormenLeisersonRivestStein2009}.)
+
+Na construção de uma árvore binária de busca
+a partir de uma permutação de $(1, \dots, n)$,
+após adicionamos o primeiro número como a raíz,
+a adição dos próximos elementos colocará
+todos os números menores que a raíz na subárvore à esquerda
+e todos os números maiores que a raíz na subárvore à direita.
+Na análise, portanto,
+precisaremos particionar uma permutação nestes dois subconjuntos.
+Assim,
+antes de começarmos a conta,
+criaremos uma notação para esta operação
+e provaremos dois lemas que serão usados para facilitar sua manipulação.
