@@ -145,3 +145,93 @@ O seguinte lema diz como.
     Assim, o número total de permutações $\sigma \in S_n$
     tal que $\sigma_< = \tau$ é $\binom{n-1}{k} (n-k-1)! = (n-1)!/k!$.
 \end{proof}
+
+De posse destes dois lemas,
+podemos demonstrar o teorema.
+
+\begin{theorem}
+    A altura média de uma árvore de busca binária
+    construída a partir de uma permutação de $n$ elementos
+    é menor ou igual a $3 \log_2 n$, para $n \geq 1$.
+\end{theorem}
+
+\begin{proof}
+    Chame de $H$ a função que retorna a altura da árvore binária de busca
+    construída a partir de uma permutação dada;
+    isto é, $H(\sigma)$ é a altura da árvore construída a partir de $\sigma$.
+    A altura média,
+    dentre todas as permutações,
+    da árvore de busca,
+    é o número $X_n$ definido por
+    \begin{equation*}
+        X_n = \frac{1}{n!} \sum_{\sigma \in S_n} H(\sigma).
+    \end{equation*}
+    Iremos trabalhar não com a altura média,
+    mas com a ``altura exponencial'' média;
+    isto é, com a média do valor de $2^{H(\sigma)}$.
+    Defina $Y_n$ por
+    \begin{equation}
+        Y_n = \frac{1}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma)}.
+        \label{eq:y-n-def}
+    \end{equation}
+    A função $2^x$ é convexa,
+    portanto,
+    pela desigualdade de Jensen,
+    $2^{X_n} \leq Y_n$,
+    para $n \geq 1$.
+    Assim, basta impor um limite superior a $Y_n$ para provar o teorema.
+
+    Para $n = 0$, o somatório que define $Y_n$ é vazio,
+    portanto $Y_0 = 0$.
+    Assuma doravante que $n > 0$.
+
+    A função $H$ pode ser definida recursivamente por
+    \begin{equation*}
+        H(\sigma) = \begin{cases}
+            -1, & \text{se $\sigma$ é a permutação vazia.} \\
+            1 + \max\{H(\sigma_<), H(\sigma_>)\}, & \text{caso contrário.}
+        \end{cases}
+    \end{equation*}
+    Como $n > 0$, para $\sigma \in S_n$,
+    o número $2^{H(\sigma)}$ é igual a $2 \max\{2^{H(\sigma_<)}, 2^{H(\sigma_>)}\}$.
+    Tanto $2^{H(\sigma_<)}$ quanto $2^{H(\sigma_>)}$ são positivos,
+    assim o máximo entre estes dois números será menor do que sua soma.
+    Aplicando estas ideias à equação~\ref{eq:y-n-def},
+    temos
+    \begin{align*}
+        Y_n &= \frac{1}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma)} \\
+            &< \frac{2}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma_<)} + 2^{H(\sigma_>)} \\
+            &= \frac{4}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma_<)}
+        &\text{pela equação~\ref{eq:lower-permutation-to-upper}} \\
+        &= \frac{4}{n!} \sum_{k = 0}^{n-1}
+            \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} 2^{H(\sigma)}
+            &\text{pela equação~\ref{eq:sum-partitions}} \\
+        &= \frac{4}{n} \sum_{k = 0}^{n-1}
+            \frac{1}{k!} \sum_{\sigma \in S_k} 2^{H(\sigma)} \\
+        &= \frac 4 n \sum_{k = 0}^{n-1} Y_k.
+    \end{align*}
+    Assim, para $n > 0$, $Y_n < \frac 4 n \sum_{k = 0}^{n-1} Y_k$.
+    Agora, usaremos esta recorrência para encontrar um limite superior para $Y_n$.
+
+    Defina os números $Z_n$ por $Z_1 = 1$,
+    $Z_n = \frac 4 n \sum_{k = 0}^{n-1} Z_k$ para $n > 1$.
+    (Os $Z_n$ satisfazem a mesma recorrência que os $Y_n$,
+    mas com igualdade em vez de ``menor que'';
+    isso facilitará sua manipulação.)
+    Observe que $Y_n \leq Z_n$.
+    Manipulando a recorrência, obtemos, para $n \geq 1$,
+    \begin{align*}
+        n Z_n &= 4 \sum_{k = 0}^{n-1} Z_k \\
+        (n-1) Z_{n-1} &= 4 \sum_{k = 0}^{n-2} Z_k \\
+        n Z_n - (n-1) Z_{n-1} &= 4 Z_{n-1} \\
+        n Z_n &= (n+3) Z_{n-1} \\
+        Z_n &= \frac{n+3}{n} Z_{n-1} \\
+            &= \frac{n+3}{n} * \frac{n+2}{n-1} Z_{n-2} \\
+            &= \frac{n+3}{n} * \frac{n+2}{n-1} * \dots * \frac 6 3 * \frac 5 2 Z_1 \\
+            &= \frac{(n+3)(n+2)(n+1)}{4*3*2} \\
+            &= \frac{n^3 + 6n^2 + 11n + 6}{24} \\
+            &\leq \frac {n^3 + 6n^3 + 11n^3 + 6n^3}{24} = n^3.
+    \end{align*}
+    Encadeando as desigualdades, temos $2^{X_n} \leq Y_n \leq Z_n \leq n_3$.
+    Portanto, concluímos que $X_n \leq \log_2(n^3) = 3 \log_2 n$.
+\end{proof}
