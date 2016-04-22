@@ -2,9 +2,6 @@
 
 \subsection{Altura média de uma árvore de busca binária}
 
-(A demonstração construída nesta seção é adaptada do livro de Cormen et al.%
-~\cite[p.~300]{CormenLeisersonRivestStein2009}.)
-
 Na construção de uma árvore binária de busca
 a partir de uma permutação de $(1, \dots, n)$,
 após adicionamos o primeiro número como a raíz,
@@ -155,6 +152,9 @@ podemos demonstrar o teorema.
     é menor ou igual a $3 \log_2 n$, para $n \geq 1$.
 \end{theorem}
 
+(A demonstração construída nesta seção é adaptada do livro de Cormen et al.%
+~\cite[p.~300]{CormenLeisersonRivestStein2009}.)
+
 \begin{proof}
     Chame de $H$ a função que retorna a altura da árvore binária de busca
     construída a partir de uma permutação dada;
@@ -235,3 +235,17 @@ podemos demonstrar o teorema.
     Encadeando as desigualdades, temos $2^{X_n} \leq Y_n \leq Z_n \leq n_3$.
     Portanto, concluímos que $X_n \leq \log_2(n^3) = 3 \log_2 n$.
 \end{proof}
+
+É interessante notar que,
+como a altura mínima de uma árvore de busca binária é $\rfloor \log_2 n \rfloor$,
+embora pareça que tenhamos ``jogado bastante coisa fora'' na demonstração
+(em particular, na última sequência de desigualdades, em que só pegamos os dois extremos),
+ainda conseguimos provar que a altura média é menor ou igual a $3 \log_2 n$;
+portanto,
+a altura média é pouco menos de três vezes a altura mínima.
+Mesmo assim,
+esta estimativa é surpreendentemente precisa:
+$3 \log_2 n = (3/\ln 2) \ln n \approx 4.328 \ln n$.
+O valor assintótico de $X_n$ é $c \ln n$,
+em que $c \approx 4.31107$ é a única solução em $(2, \infty)$ da equação $c \ln(2e/c) = 1$
+\cite[p.~308]{SedgewickFlajolet2013}.
