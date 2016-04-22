@@ -97,3 +97,51 @@ Como usaremos ambas,
         &\text{pois $\sigma \mapsto \overline \sigma$ é uma bijeção.}
     \end{align*}
 \end{proof}
+
+Como $\sigma_<$ será uma permutação,
+o somatório do lado direito da equação~\ref{eq:lower-permutation-to-upper}
+pode ser reescrito sem usar o subscrito ${}_<$.
+O seguinte lema diz como.
+
+\begin{lemma}
+    Chame de $\mathcal S$ o conjunto de todas as permutações.
+    Se $f: \mathcal S \to \mathbb N$ é uma função qualquer,
+    então
+    \begin{equation}
+        \sum_{\sigma \in S_n} f(\sigma_<)
+            = \sum_{k = 0}^{n-1} \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} f(\sigma).
+        \label{eq:sum-partitions}
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Primeiro,
+    observe que toda permutação $\tau \in S_k$, para $k < n$,
+    é $\sigma_<$ para algum $\sigma \in S_n$
+    (basta escolher, por exemplo,
+    a sequência $(k+1, \tau(1), \dots, \tau(k), k+2, k+3, \dots, n)$);
+    portanto,
+    a forma do somatório à esquerda da equação~\ref{eq:sum-partitions} está certa.
+    Falta verificar a constante $(n-1)!/k!$ de cada termo.
+
+    Esta constante refere-se a quantas permutações $\sigma \in S_n$
+    satisfazem $\sigma_< = \tau$ para alguma permutação $\tau \in S_k$ dada.
+    Fixe, portanto, $\tau \in S_k$.
+    Para que $\sigma_< = \tau$,
+    primeiro, precisamos ter $\sigma(1) = k+1$,
+    pois existem exatamente $k$ elementos em $\sigma$ que são menores que $\sigma(1)$
+    --- são esses que virarão os elementos de $\tau$.
+    Existem $n-1$ posições que não foram fixadas em $\sigma$;
+    dessas, $k$ serão os números $\tau(1), \dots, \tau(k)$,
+    em sequência;
+    são, portanto, $\binom{n-1}{k}$ diferentes conjuntos de posições
+    que terão os elementos de $\tau$.
+
+    Fixadas essas posições,
+    precisamos distribuir os $n - k - 1$ números entre $k+1$ e $n$
+    nas $n - k - 1$ posições restantes.
+    Como a ordem não altera o valor de $\sigma_<$,
+    todas as $(n - k - 1)!$ permutações são válidas.
+    Assim, o número total de permutações $\sigma \in S_n$
+    tal que $\sigma_< = \tau$ é $\binom{n-1}{k} (n-k-1)! = (n-1)!/k!$.
+\end{proof}
