@@ -1,5 +1,6 @@
 @default_files = ('main');
-$pdf_mode = 1;
+$pdflatex = 'lualatex %O %S';
+$pdf_mode = 1; $postscript_mode = $dvi_mode = 0;
 system("make -s -C bib"); # Far easier than my complex makefile rules...
 # The bib/ subdirectory is an independent submodule,
 # so this recursive make is not harmful.
