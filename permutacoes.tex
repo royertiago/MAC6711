@@ -1,0 +1,64 @@
+\subsection{Geração uniforme de permutações}
+
+Como a seção~\ref{sec:contagem} mostra,
+a distribuição de árvores binárias é diferente
+da distribuição das árvores construidas a partir de permutações.
+Para gerar aleatoriamente uma árvore de busca binária,
+podes gerar aleatoriamente uma permutação
+e construir a árvore de busca binária associada.
+Esta seção descreve um algoritmo para gerar aleatóriamente uma permutação.
+
+Assumiremos que existe um procedimento $\proc{random}(n)$
+que gera um número aleatório entre $0$ e $n-1$, com distribuição uniforme.
+Este problema foi bem estudado; ver, por exemplo, o livro~\cite{Knuth1997}.
+
+O algoritmo a seguir foi extraído de~\cite[p.~357]{SedgewickFlajolet2013}.
+Assumiremos que o vetor $V$ está indexado em $0$.
+
+\begin{codebox}
+    \Procname{$\proc{Shuffle}(V)$}
+    \li \For $i \gets 1$ \To $\id{length}(V) - 1$
+    \li \Do
+            swap $A[i]$ and $A[\proc{random}(i+1)]$
+    \End
+\end{codebox}
+
+\begin{proposition}
+    O algoritmo \proc{Shuffle},
+    ao embaralhar um vetor de $n$ elementos,
+    produz cada uma das $n!$ permutações
+    com igual probabilidade.
+\end{proposition}
+
+\begin{proof}
+    Mostraremos que, ao final da $i$-ésima iteração,
+    os elementos $V[0], \dots, V[i]$
+    estarão uniformemente embaralhados.
+    Observe que essa propriedade é verdadeira antes de o laço executar,
+    pois existe uma única permutação para 1 elemento.
+
+    No início da $i$-ésima iteração,
+    os elementos $V[0], \dots, V[i-1]$
+    estão uniformemente embaralhados.
+    Seja $k \in [0, i]$ o inteiro gerado pela função $\proc{random}$.
+    O elemento $V[i]$ será inserido na posição $k$ do vetor,
+    portanto,
+    podemos particionar as permutações dos elementos $V[0], \dots, V[i]$
+    em $i+1$ conjuntos,
+    um para cada possível valor de $k$.
+
+    Após selecionado $k$,
+    o algoritmo efetivamente calcula uma bijeção entre
+    as permutações dos elementos $V[0], \dots, V[i-1]$,
+    e as permutações dos elementos $V[0], \dots, V[i]$ tais que 
+    $V[k]$ é o elemento que originalmente estava na posição $i$ do vetor.
+    Como é uma bijeção,
+    a distribuição dos elementos não é alterada;
+    assim, o algoritmo escolhe uniformemente uma permutação
+    deste conjunto de partições.
+    E, como $k$ foi gerado uniformemente,
+    cada uma das partições (todas de tamanho $i!$) é equiprovável;
+    assim, ao final da $i$-ésima iteração,
+    cada uma das $(i+1)!$ permutações dos elementos $V[0], \dots, V[i]$
+    é equiprovável.
+\end{proof}
