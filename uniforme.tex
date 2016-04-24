@@ -237,3 +237,65 @@ sequências de apostas são essa forma canônica.
     Basta procurar o $k$ da demonstração do lema
     e retornar a permutação correspondente.
 \end{proof}
+
+Portanto, cada classe de equivalência descrita acima
+possui exatamente uma sequência de apostas;
+assim, as sequências de apostas com $2n+1$ bits
+são equinumerosas às árvores binárias com $n$ nodos.
+Portanto,
+falta uma bijeção simples entre sequências de apostas e árvores binárias.
+Usaremos uma linguagem livre de contexto para fazer o mapeamento.
+
+\begin{lemma}
+    A gramática $G$ definida pelas produções
+    \begin{equation*}
+        T \to 0 \mid 1TT
+    \end{equation*}
+    é não-ambígua, gera somente sequências de apostas,
+    e, se associarmos os nós internos de uma árvore binária com o terminal $1$
+    e os nós externos com o terminal $0$,
+    temos uma árvore de parsing para esta gramática.
+\end{lemma}
+
+\begin{proof}
+    Para provar que $G$ é não-ambígua,
+    podemos, por exemplo, verificar que $G$ é $LL(1)$; % Olinto approves
+    como gramáticas $LL(1)$ não são ambíguas~\cite[p.~233]{AhoLamSethiUllman2006},
+    $G$ é não-ambígua.
+
+    As outras duas afirmações podem ser demonstradas através de indução.
+
+    Para a primeira,
+    observe que $0$ satisfaz às exigências.
+    Se $w = 1xy$ em que $x, y \in L(G)$,
+    por indução sabemos que $x$ e $y$ são sequências de apostas.
+    Nenhum prefixo próprio de $x$ terá mais zeros que uns,
+    assim, todos os prefixos menores que $|1x|$ satisfazem às exigências.
+    Como $x$ possui um zero a mais, $1x$ terá o mesmo número de zeros e uns,
+    sendo um prefixo ``válido'';
+    e, como nenhou prefixo próprio de $y$ possui mais zeros que uns,
+    podemos concatená-los com $1x$ para concluir que
+    nenhum prefixo próprio de $w$ possui mais zeros que uns.
+
+    Para a segunda,
+    observe que um nó externo corresponde a escolher a primeira produção
+    e um nó interno corresponde escolher a segunda
+    (pois, por indução, ambas as subárvores são árvores de parsing para $G$).
+\end{proof}
+
+\begin{corollary}
+    Existe uma função bijetiva $\proc{Parse}(w)$
+    que, dada uma sequência de apostas $w$ de tamanho $2n+1$,
+    retorna uma árvore binária de $n$ nodos.
+\end{corollary}
+
+\begin{proof}
+    Basta fazer o parsing de acordo com a gramátiga $G$ do lema.
+    Como a gramática é não-ambígua,
+    o parsing é injetor;
+    como cada árvore binária corresponde a alguma sequência de apostas
+    e essas sequências não se repetem,
+    de fato todas as sequências de apostas são geradas pela gramátiga $G$.
+    Assim, $\proc{Parse}$ reconhece todas as sequências de apostas,
+    sendo, portanto, uma bijeção entre sequências de apostas e árvores binárias.
+\end{proof}
