@@ -29,7 +29,7 @@ que estão definidas a seguir.
 
 \begin{definition}
     Uma \emph{sequência de apostas} de $2n+1$ bits
-    é uma string binária com $n$ bits $1$ e $n+1$ bits $0$,
+    é uma palavra binária com $n$ bits $1$ e $n+1$ bits $0$,
     tal que
     nenhum prefixo próprio possui mais zeros que uns.
 \end{definition}
@@ -74,3 +74,73 @@ mostra o gráfico do saldo resultante da sequência de apostas $11100100100$.
     }
     \label{fig:apostas}
 \end{figure}
+
+A seguir,
+provaremos dois teoremas
+que nos darão o número de sequências de apostas com $2n+1$ bits.
+
+\begin{definition}
+    Uma \emph{permutação circular}
+    de uma cadeia de caracteres $w$
+    é uma cadeia da forma $yx$,
+    sendo que $w = xy$ e $x \neq \epsilon$.
+\end{definition}
+
+Estamos ignorando aqui a decomposição $\epsilon w$
+pois ela é funcionalmente idêntica à decomposição $w \epsilon$
+e só ``atrapalha'' os enunciados dos teoremas.
+Assim,
+existem $n$ permutações circulares (não necessariamente distintas)
+de uma palavra com $n$ elementos.
+
+\begin{lemma}
+    Se $w$ é uma palavra com $n$ uns e $n+1$ zeros,
+    então todas as $2n+1$ permutações circulares de $w$ são distintas.
+\end{lemma}
+
+\begin{proof}
+    Suponha que haja duas decomposições $w = xy = x'y'$
+    tais que $|x| < |x'|$ e $yx = y'x'$.
+    Como $xy = x'y'$
+    existe alguma cadeia $z \neq \epsilon$
+    tal que $x' = xz$
+    (pois $x$ é um prefixo próprio de $x'$).
+    Assim, temos
+    \begin{equation*}
+        x'y' = xzy' = xy,
+    \end{equation*}
+    o que mostra que $y = zy'$.
+    Agora,
+    como $yx = y'x'$,
+    temos
+    \begin{equation*}
+        zy'x = y'xz.
+    \end{equation*}
+    Escolhendo $u = y'x$, temos $uz = zu$
+    para $u, z \neq \epsilon$.
+    É um conhecido teorema da análise combinatória em palavras
+    que essa situação só pode ocorrer se
+    existir alguma cadeia $v$ e inteiros positivos $k, l$ tais que
+    $u = v^k$ e $z = v^l$ \cite[p.~32]{Shallit2008}.
+    Isto é, tanto $u$ quanto $z$ são potências da mesma palavra.
+    Assim,
+    se a diferença entre o número de zeros e uns nesta palavra $v$ for $j$,
+    a diferença entre o número de zeros e uns em $w$ será $j(k + l)$.
+    Como $k + l \geq 2$,
+    esse número nunca poderá ser $1$,
+    contradizendo o fato de $w$ ter exatamente $n$ uns e $n+1$ zeros.
+
+    Portanto, todas as $2n+1$ permutações circulares de $w$ são distintas.
+\end{proof}
+
+Concluímos assim que,
+se o conjunto das $\binom{2n+1}{n}$ palavras binárias
+for particionado através de permutações circulares
+(isto é, duas cadeias são equivalentes se uma é uma permutação circular da outra),
+cada classe de equivalência terá exatamente $2n+1$ palavras.
+Assim,
+serão $\binom{2n+1}{n}/(2n+1) = \frac{1}{n+1} \binom{2n}{n} = C_n$
+classes de equivalência
+--- exatamente o mesmo número de árvores binárias com $n$ nós.
+Assim,
+sabemos que há uma bijeção entre árvores binárias e essas classes de equivalência.
