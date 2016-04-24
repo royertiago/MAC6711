@@ -144,3 +144,96 @@ classes de equivalência
 --- exatamente o mesmo número de árvores binárias com $n$ nós.
 Assim,
 sabemos que há uma bijeção entre árvores binárias e essas classes de equivalência.
+
+Assim,
+se pudermos pôr uma determinada palavra $w$ com $n$ uns e $n+1$ zeros
+em uma ``forma canônica''
+(isto é, escolher um representante em cada classe de equivalência),
+teremos uma bijeção entre essas palavras e árvores binárias.
+O teorema a seguir mostra que
+sequências de apostas são essa forma canônica.
+
+\begin{lemma}
+    Seja $w$ uma palavra com $n$ uns e $n+1$ zeros.
+    Então existe uma única permutação circular de $w$
+    que é uma sequência de apostas.
+\end{lemma}
+
+\begin{proof}
+    Escreva $w = w_0 w_1 \dots w_{2n}$.
+    Defina $\Delta w[i..j]$ como sendo a diferença entre
+    o número de uns e o número de zeros
+    da subpalavra $w_i w_{i+1} \dots w_j$.
+    Assim,
+    por exemplo,
+    a condição da sequência de apostas
+    diz que $\Delta w[0..k]$ será negativo
+    se e só se $k = 2n$.
+    Pode ser que $w$ não seja uma sequência de apostas;
+    neste caso, $\Delta w[0..k]$ será negativo
+    para valores menores de $k$.
+    Escolha $k$ de maneira a minimizar o valor de $\Delta w[0..k]$
+    (isto é, num gráfico com a palavra $w$ semelhante ao gráfico~\ref{fig:apostas},
+    $k$ é um ponto de mínimo global).
+    Na existência de vários mínimos,
+    pegue o menor $k$ possível.
+    Mostraremos que $w' = w_{k+1} w_{k+2} \dots w_{2n} w_0 w_1 \dots w_k$
+    é a única permutação circular de $w$
+    que é uma sequência de apostas.
+
+    Primeiro,
+    mostraremos que $w'$ é,
+    de fato,
+    uma sequência de apostas.
+    Chame de $d = \Delta w[0..k] < 0$ o mínimo global no gráfico.
+    Os prefixos de $w'$ de tamanho $j \leq 2n-k$ satisfazem
+    $\Delta w'[0..j-1] = \Delta w[k+1..j+k] = \Delta w[0..j+k] - d$.
+    Como $\Delta w[0..j+k] \geq d$
+    (pois $d$ é mínimo global),
+    $\Delta w'[0..j-1] \geq 0$,
+    portanto prefixos de tamanho menor ou igual a $2n - k$
+    satisfazem à exigência.
+
+    Os prefixos de $w'$ de tamanho $j > 2n - k$
+    envolvem caracteres do início de $w$,
+    portanto, $\Delta w'[0..j-1] = \Delta w[0..j-2n+k-1] + \Delta w[k+1..2n]$.
+    Como $\Delta w[0..2n] = -1$,
+    $\Delta w[k+1..2n] = -1-d$;
+    assim, $\Delta w'[0..j-1] = \Delta w[0..j-2n+k-1] - 1 - d$.
+    $k$ foi escolhido como sendo o primeiro mínimo global,
+    portanto $\Delta w[0..j-2n+k-1]$ será estritamente maior que $d$
+    para $j - 2n + k - 1 < k$, ou $j-1 < 2n$.
+    Assim,
+    $\Delta w'[0..j-1] \geq 0$
+    se $2n - k \leq j-1 < 2n$,
+    provando que $w'$ é uma sequência de apostas.
+
+    Por último, para provar unicidade,
+    note que toda permutação circular de $w$ é uma permutação circular de $w'$.
+    Para qualquer decomposição $w' = xy$ com $x, y \neq \epsilon$,
+    temos
+    \begin{equation*}
+        \Delta y[0..|y|-1] = \Delta w'[|x|..2n] = \Delta w'[0..2n] - \Delta w'[0..|x|-1]
+        < 0,
+    \end{equation*}
+    pois $\Delta w[0..|x|-1]$ é um prefixo próprio de $w'$,
+    sendo portanto, não-negativo,
+    e $\Delta w'[0..2n] = -1$.
+    Assim, a permutação circular $yx$ de $w$
+    possuiria um prefixo próprio com mais zeros que uns,
+    não constutituindo uma sequência de apostas.
+
+    Concluímos que $w'$ é a única permutação circular de $w$
+    que é uma sequência de apostas.
+\end{proof}
+
+\begin{corollary}
+    Existe um procedimento $\proc{Representative}(w)$
+    que retorna a permutação circular de $w$ que é uma sequência de apostas
+    (isto é, retorna o representante da classe de equivalência de $w$).
+\end{corollary}
+
+\begin{proof}
+    Basta procurar o $k$ da demonstração do lema
+    e retornar a permutação correspondente.
+\end{proof}
