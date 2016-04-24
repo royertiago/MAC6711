@@ -23,3 +23,54 @@ que não possui o problema de precisar números ``grandes''
 (lembre-se de que os $C_n$ crescem exponencialmente)
 ou com possíveis erros de arredondamento
 (caso usemos números em ponto flutuante para fazer o ponderamento).
+
+Iremos construir uma bijeção entre árvores binárias e sequências de apostas,
+que estão definidas a seguir.
+
+\begin{definition}
+    Uma \emph{sequência de apostas} de $2n+1$ bits
+    é uma string binária com $n$ bits $1$ e $n+1$ bits $0$,
+    tal que
+    nenhum prefixo próprio possui mais zeros que uns.
+\end{definition}
+
+Por exemplo, $11100100100$ é uma sequência de apostas.
+
+O nome desta sequência vem da analogia com um apostador
+que começa com uma ficha e faz sucessivas apostas.
+Em cada vitória, ele ganha mais uma ficha e marcamos $1$ em sua sequência,
+e em cada derrota, ele perde uma ficha e marcamos $0$ em sua sequência.
+No instante em que o apostador acumular mais derrotas do que vitórias,
+ele terá perdido todas as suas fichas, inclusive a inicial,
+portanto sua sequência de apostas encerra-se aqui.
+A figura~\ref{fig:apostas}
+mostra o gráfico do saldo resultante da sequência de apostas $11100100100$.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.75]
+        \datavisualization [school book axes, visualize as line]
+        data [separator=\space] {
+            x y
+            0 0
+            1 1
+            2 2
+            3 3
+            4 2
+            5 1
+            6 2
+            7 1
+            8 0
+            9 1
+            10 0
+            11 -1
+        };
+    \end{tikzpicture}
+    \caption{
+        Gráfico do saldo relativo à sequência de apostas $11100100100$.
+        Observe que o único momento em que o saldo do jogador fica negativo
+        é no final da sequência
+        --- que é quando ele perde a ficha inicial.
+    }
+    \label{fig:apostas}
+\end{figure}
