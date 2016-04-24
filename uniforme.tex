@@ -299,3 +299,29 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
     Assim, $\proc{Parse}$ reconhece todas as sequências de apostas,
     sendo, portanto, uma bijeção entre sequências de apostas e árvores binárias.
 \end{proof}
+
+Finalmente, costurando tudo,
+obtemos o seguinte algoritmo para gerar uniformemente uma árvore binária aleatória.
+
+\begin{codebox}
+    \Procname{$\proc{Random-Binary-Tree}(n)$}
+    \li $w[0] \gets w[1] \gets \dots \gets w[n] \gets 0$
+    \li $w[n+1] \gets w[n+2] \gets \dots \gets w[2n] \gets 1$
+    \li $\proc{Shuffle}(w)$
+    \li \Return $\proc{Parse}(\proc{Representative}(w))$
+\end{codebox}
+
+\begin{theorem}
+    O procedimento $\proc{Random-Binary-Tree}$ acima
+    gera aleatoriamente uma árvore binária com $n$ nós de maneira uniforme.
+\end{theorem}
+
+\begin{proof}
+    As três primeiras linhas constroem uma das $\binom{2n+1}{n}$ palavras
+    que possuem $n$ uns e $n+1$ zeros,
+    de maneira uniforme.
+    A extração do representante é uniforme,
+    pois cada representante é representado por exatamente $2n+1$ diferentes palavras,
+    e o parsing é bijetivo,
+    portanto não altera a distribuição uniforme.
+\end{proof}
