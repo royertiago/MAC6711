@@ -1,0 +1,25 @@
+\subsection{Geração uniforme de árvores binárias}
+
+Como mostrado anteriormente,
+embora o procedimento de gerar aleatoriamente uma permutação
+e construir uma árvore binária de busca
+seja um método efetivo para gerar aleatoriamente árvores binárias,
+esse procedimento não gerará todas as árvores de $n$ nós uniformemente.
+
+Uma maneira simples de obter uma distribuição uniforme
+é usar os números de Catalão.
+Na demonstração da fórmula~\ref{eq:catalan},
+mostramos que existem $C_k C_{n-k-1}$ árvores binárias com $n$ nós
+tais que a subárvore esquerda possui $k$ nós.
+Assim,
+poderíamos calcular todos esses valores,
+ponderar a geração do número $k$ por eles,
+e gerar recursivamente duas árvores binárias
+--- uma com $k$ nós e a outra com $n - k - 1$ nós.
+
+Nesta seção,
+descreveremos outra maneira de gerar uniformemente uma árvore binária,
+que não possui o problema de precisar números ``grandes''
+(lembre-se de que os $C_n$ crescem exponencialmente)
+ou com possíveis erros de arredondamento
+(caso usemos números em ponto flutuante para fazer o ponderamento).
