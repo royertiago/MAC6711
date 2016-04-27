@@ -16,32 +16,32 @@ que gera um número aleatório entre $1$ e $n$, com distribuição uniforme.
 Este problema foi bem estudado; ver, por exemplo, o livro~\cite{Knuth1997}.
 
 O primeiro algoritmo foi extraído de~\cite[p.125]{CormenLeisersonRivestStein2009}.
-A ideia é gerar uma chave aleatória para cada elemento do vetor
-e ordená-lo de acordo com a chave.
-Se todas as chaves forem diferentes,
+A ideia é gerar uma prioridade aleatória para cada elemento do vetor
+e ordená-lo de acordo com a prioridade.
+Se todas as prioridades forem diferentes,
 conseguimos garantir que a permutação resultante será gerada uniformemente.
 
 De acordo com Cormen et al. \cite[p.~125]{CormenLeisersonRivestStein2009},
 para um vetor de tamanho $n$,
-gerar as chaves no intervalo $[1, n^3]$ resulta numa probabilidade de $1-1/n$
-de todas as chaves serem diferentes.
-Alternativamente, poderíamos localizar os grupos com chaves iguais
+gerar as prioridades no intervalo $[1, n^3]$ resulta numa probabilidade de $1-1/n$
+de todas as prioridades serem diferentes.
+Alternativamente, poderíamos localizar os grupos com prioridades iguais
 e reembaralhar cada grupo;
-isso equivale a adicionar dígitos decimais aleatórios às chaves,
+isso equivale a adicionar casas decimais aleatórias às prioridades,
 tornando-as únicas.
 
 \begin{codebox}
     \Procname{$\proc{Shuffle-by-Sorting}(V)$}
     \li $n \gets \id{length}(V)$
-    \li let $K$ be a new vector with size $n$
+    \li let $P$ be a new vector with size $n$
     \li \For $i \gets 1$ \To $n$
     \li \Do
-            $K[i] \gets \proc{random}(n^3)$
+            $P[i] \gets \proc{random}(n^3)$
     \End
-    \li Sort $V$ using $K$ as the keys
+    \li Sort $V$ using $P$ as the keys
 \end{codebox}
 
-Assumindo que todas as chaves são diferentes, podemos provar o seguinte teorema.
+Assumindo que todas as prioridades são diferentes, podemos provar o seguinte teorema.
 
 \begin{proposition}
     O algoritmo \proc{Shuffle-by-Sorting},
@@ -55,13 +55,13 @@ Assumindo que todas as chaves são diferentes, podemos provar o seguinte teorema
     gerar a permutação identidade é $1/n!$.
 
     Para isso acontecer,
-    o elemento $V[1]$ precisa ter chave inferior a todos os outros.
-    Como todas as chaves são diferentes,
-    a chance de uma chave específica ser a menor é $1/n$;
+    o elemento $V[1]$ precisa ter prioridade inferior a todos os outros.
+    Como todas as prioridades são diferentes,
+    a chance de uma prioridade específica ser a menor é $1/n$;
     portanto, com probabilidade $1/n$ o elemento $V[1]$ terminará na posição $1$.
 
     Agora, o próximo elemento, $V[2]$,
-    precisa ter a menor chave dentre a $n-1$ chaves restantes;
+    precisa ter a menor prioridade dentre a $n-1$ prioridades restantes;
     similarmente, a probabilidade disso ocorrer é $1/(n-1)$.
 
     Prosseguindo dessa forma,
