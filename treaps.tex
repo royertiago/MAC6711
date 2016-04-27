@@ -32,3 +32,81 @@ Como a inserção/remoção de elementos
 não altera a distribuição de prioridades,
 a árvore contituará sendo uma árvore binária de busca aleatória,
 preservando a profundidade esperada logarítmica.
+
+Para definir treaps, precisamos do conceito de \emph{heap}.
+
+\begin{definition}
+    Uma árvore binária em que todos os nós possuem uma prioridade associada
+    é um \emph{heap}
+    se todos os nós da árvore tiverem prioridade maior do que seus filhos.
+\end{definition}
+
+É importante notar que o conceito alternativo de heap na literatura;
+em textos como o livro de Cormen et. al.~\cite[p.~152]{CormenLeisersonRivestStein2009},
+um heap, além de satisfazer a exigência acima,
+ainda precisa ser uma árvore binária completa ou quase completa
+--- isto é, todos os níveis precisam estar completos,
+com excessão do último, que pode estar incompleto,
+mas precisa ser preenchido da esquerda para a direita.
+Esta restrição adicional
+faz com que heaps possam ser eficientemente implementadas como um vetor,
+tanto acelerando acesso e modificação quanto reduzindo o espaço utilizado.
+(Note que todas essas otimizações apenas mexem na constante associada.)
+Alguns textos, como o livro de Sedgewick e Flajolet~\cite[p.~362]{SedgewickFlajolet2013},
+chamam a condição acima de ``ordem de heap'';
+então, o que eles chamam de ``árvore em ordem de heap``,
+nós chamaremos simplesmente de ``heap''.
+
+Ao contrário das árvores binárias,
+existem tantas heaps quantas permutações sobre $n$ elementos.
+
+\begin{proposition}
+    Existem $n!$ diferentes heaps de $n$ elementos
+    cujas prioridades são números do conjunto $\{1, \dots, n\}$.
+\end{proposition}
+
+\begin{proof}
+    Iremos construir uma bijeção entre os dois conjuntos.
+    A figura~\ref{fig:heap-permutation} contém um exemplo deste mapeamento.
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[binary tree layout, nodes={circle, draw}]
+            \node {8}
+            child { node {4}
+                child { node {2} }
+                child { node {3} }
+            }
+            child { node {7}
+                child[missing]
+                child { node {6}
+                    child { node {1} }
+                    child { node {5} }
+                }
+            };
+        \end{tikzpicture}
+        \caption{Heap correspondente à permutação $(2, 4, 3, 8, 7, 1, 6, 5)$.}
+        \label{fig:heap-permutation}
+    \end{figure}
+
+    Dado um heap sobre o conjunto $\{1, \dots, n\}$,
+    construa uma permutação
+    simplesmente listando as prioridades ao percorrer a árvore em ordem simétrica
+    (in-order).
+    Dois heaps distintos produzirão permutações diferentes,
+    portanto, existem no máximo $n!$ heaps distintas.
+
+    Agora, dada uma permutação $\sigma$,
+    escolha $k$ tal que $\sigma(k) = n$; este é o maior valor da permutação.
+    Construa um heap colocando o elemento $k$ na raíz,
+    e então construa a subárvore esquerda recursivamente com a lista
+    $(\sigma(1), \dots, \sigma(k-1))$,
+    e a subárvore direita com a lista $(\sigma(k+1), \dots, \sigma(n))$.
+    Duas permutações diferentes diferem ou na posição do maior valor,
+    e nesse caso as subárvores geradas terão tamanhos diferentes,
+    ou em alguma das duas partições,
+    e neste caso alguma das subárvores será diferente.
+    Portanto, existem ao menos $n!$ heaps distintas.
+
+    Concluímos que existem exatamente $n!$ heaps distintas.
+\end{proof}
