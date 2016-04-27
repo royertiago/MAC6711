@@ -9,10 +9,10 @@ e construir a árvore de busca binária associada.
 Esta seção descreve dois algoritmos para permutar aleatoriamente um vetor.
 (Então, uma permutação pode ser gerada, por exemplo,
 permutando aleatoriamente o vetor $(1, \dots, n)$.)
-Assumiremos que os vetores estão indexados em $0$.
+Assumiremos que os vetores estão indexados em $1$.
 
 Assumiremos que existe um procedimento $\proc{random}(n)$
-que gera um número aleatório entre $0$ e $n-1$, com distribuição uniforme.
+que gera um número aleatório entre $1$ e $n$, com distribuição uniforme.
 Este problema foi bem estudado; ver, por exemplo, o livro~\cite{Knuth1997}.
 
 O primeiro algoritmo foi extraído de~\cite[p.125]{CormenLeisersonRivestStein2009}.
@@ -34,7 +34,7 @@ tornando-as únicas.
     \Procname{$\proc{Shuffle-by-Sorting}(V)$}
     \li $n \gets \id{length}(V)$
     \li let $K$ be a new vector with size $n$
-    \li \For $i \gets 0$ \To $n-1$
+    \li \For $i \gets 1$ \To $n$
     \li \Do
             $K[i] \gets \proc{random}(n^3)$
     \End
@@ -51,8 +51,6 @@ Assumindo que todas as chaves são diferentes, podemos provar o seguinte teorema
 \end{proposition}
 
 \begin{proof}
-    (Por simplicidade, indexaremos o vetor em $1$ na análise.)
-
     Primeiro, mostraremos que a probabilidade de este algoritmo
     gerar a permutação identidade é $1/n!$.
 
@@ -89,9 +87,9 @@ extraído de~\cite[p.~357]{SedgewickFlajolet2013}.
 
 \begin{codebox}
     \Procname{$\proc{Shuffle}(V)$}
-    \li \For $i \gets 1$ \To $\id{length}(V) - 1$
+    \li \For $i \gets 2$ \To $\id{length}(V)$
     \li \Do
-            swap $A[i]$ and $A[\proc{random}(i+1)]$
+            swap $A[i]$ and $A[\proc{random}(i)]$
     \End
 \end{codebox}
 
@@ -104,33 +102,33 @@ extraído de~\cite[p.~357]{SedgewickFlajolet2013}.
 
 \begin{proof}
     Mostraremos que, ao final da $i$-ésima iteração,
-    os elementos $V[0], \dots, V[i]$
+    os elementos $V[1], \dots, V[i]$
     estarão uniformemente embaralhados.
     Observe que essa propriedade é verdadeira antes de o laço executar,
     pois existe uma única permutação para 1 elemento.
 
     No início da $i$-ésima iteração,
-    os elementos $V[0], \dots, V[i-1]$
+    os elementos $V[1], \dots, V[i-1]$
     estão uniformemente embaralhados.
-    Seja $k \in [0, i]$ o inteiro gerado pela função $\proc{random}$.
+    Seja $k \in [1, i]$ o inteiro gerado pela função $\proc{random}$.
     O elemento $V[i]$ será inserido na posição $k$ do vetor,
     portanto,
-    podemos particionar as permutações dos elementos $V[0], \dots, V[i]$
-    em $i+1$ conjuntos,
+    podemos particionar as permutações dos elementos $V[1], \dots, V[i-1]$
+    em $i$ conjuntos,
     um para cada possível valor de $k$.
 
     Após selecionado $k$,
     o algoritmo efetivamente calcula uma bijeção entre
-    as permutações dos elementos $V[0], \dots, V[i-1]$,
-    e as permutações dos elementos $V[0], \dots, V[i]$ tais que 
+    as permutações dos elementos $V[1], \dots, V[i-1]$,
+    e as permutações dos elementos $V[1], \dots, V[i]$ tais que
     $V[k]$ é o elemento que originalmente estava na posição $i$ do vetor.
     Como é uma bijeção,
     a distribuição dos elementos não é alterada;
     assim, o algoritmo escolhe uniformemente uma permutação
     deste conjunto de partições.
     E, como $k$ foi gerado uniformemente,
-    cada uma das partições (todas de tamanho $i!$) é equiprovável;
+    cada uma das partições (todas de tamanho $(i-1)!$) é equiprovável;
     assim, ao final da $i$-ésima iteração,
-    cada uma das $(i+1)!$ permutações dos elementos $V[0], \dots, V[i]$
+    cada uma das $i!$ permutações dos elementos $V[1], \dots, V[i]$
     é equiprovável.
 \end{proof}
