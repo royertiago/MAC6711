@@ -1,0 +1,34 @@
+\section{Aplicação: Treaps}
+
+De acordo com o teorema~\ref{thm:average-tree-depth},
+uma árvore de busca gerada aleatoriamente
+possui altura esperada logarítmica.
+Mais específicamente,
+uma árvore de $n$ nós
+deve ter profundidade pouco inferior a $3 \log_2 n$.
+Árvores auto-balanceadas,
+como AVL e rubro-negras,
+possuem profundidade inferior a $1.441 \log_2 n$ \cite[p.~460]{Knuth1998}
+e $2 \log_2 n$ \cite[p.~309]{CormenLeisersonRivestStein2009},
+respectivamente.
+Portanto,
+na média,
+árvores binárias de busca geradas aleatoriamente
+possuem profundidade similar às árvores auto-balanceadas,
+mas sem o overhead de fazer o balanceamento.
+
+Entretanto,
+sabe-se muito pouco sobre o comportamento de árvores binárias de busca
+quando inserções e remoções são intercaladas%
+~\cite[p.~300]{CormenLeisersonRivestStein2009},
+portanto é necessário cuidado ao alterar uma árvore gerada aleatoriamente
+para que sua ``aleatoriedade'' se mantenha,
+o que nos permite analisá-la.
+
+Treaps~\cite{AragonSeidel1989} são uma forma de preservar a aleatoriedade.
+A ideia é associar cada elemento a uma prioridade aleatória,
+e permutar o vetor de acordo com essa prioridade.
+Como a inserção/remoção de elementos
+não altera a distribuição de prioridades,
+a árvore contituará sendo uma árvore binária de busca aleatória,
+preservando a profundidade esperada logarítmica.
