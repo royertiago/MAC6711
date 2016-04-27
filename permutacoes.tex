@@ -6,14 +6,86 @@ da distribuição das árvores construidas a partir de permutações.
 Para gerar aleatoriamente uma árvore de busca binária,
 podes gerar aleatoriamente uma permutação
 e construir a árvore de busca binária associada.
-Esta seção descreve um algoritmo para gerar aleatóriamente uma permutação.
+Esta seção descreve dois algoritmos para permutar aleatoriamente um vetor.
+(Então, uma permutação pode ser gerada, por exemplo,
+permutando aleatoriamente o vetor $(1, \dots, n)$.)
+Assumiremos que os vetores estão indexados em $0$.
 
 Assumiremos que existe um procedimento $\proc{random}(n)$
 que gera um número aleatório entre $0$ e $n-1$, com distribuição uniforme.
 Este problema foi bem estudado; ver, por exemplo, o livro~\cite{Knuth1997}.
 
-O algoritmo a seguir foi extraído de~\cite[p.~357]{SedgewickFlajolet2013}.
-Assumiremos que o vetor $V$ está indexado em $0$.
+O primeiro algoritmo foi extraído de~\cite[p.125]{CormenLeisersonRivestStein2009}.
+A ideia é gerar uma chave aleatória para cada elemento do vetor
+e ordená-lo de acordo com a chave.
+Se todas as chaves forem diferentes,
+conseguimos garantir que a permutação resultante será gerada uniformemente.
+
+De acordo com Cormen et al. \cite[p.~125]{CormenLeisersonRivestStein2009},
+para um vetor de tamanho $n$,
+gerar as chaves no intervalo $[1, n^3]$ resulta numa probabilidade de $1-1/n$
+de todas as chaves serem diferentes.
+Alternativamente, poderíamos localizar os grupos com chaves iguais
+e reembaralhar cada grupo;
+isso equivale a adicionar dígitos decimais aleatórios às chaves,
+tornando-as únicas.
+
+\begin{codebox}
+    \Procname{$\proc{Shuffle-by-Sorting}(V)$}
+    \li $n \gets \id{length}(V)$
+    \li let $K$ be a new vector with size $n$
+    \li \For $i \gets 0$ \To $n-1$
+    \li \Do
+            $K[i] \gets \proc{random}(n^3)$
+    \End
+    \li Sort $V$ using $K$ as the keys
+\end{codebox}
+
+Assumindo que todas as chaves são diferentes, podemos provar o seguinte teorema.
+
+\begin{proposition}
+    O algoritmo \proc{Shuffle-by-Sorting},
+    ao embaralhar um vetor de $n$ elementos,
+    produz cada uma das $n!$ permutações
+    com igual probabilidade.
+\end{proposition}
+
+\begin{proof}
+    (Por simplicidade, indexaremos o vetor em $1$ na análise.)
+
+    Primeiro, mostraremos que a probabilidade de este algoritmo
+    gerar a permutação identidade é $1/n!$.
+
+    Para isso acontecer,
+    o elemento $V[1]$ precisa ter chave inferior a todos os outros.
+    Como todas as chaves são diferentes,
+    a chance de uma chave específica ser a menor é $1/n$;
+    portanto, com probabilidade $1/n$ o elemento $V[1]$ terminará na posição $1$.
+
+    Agora, o próximo elemento, $V[2]$,
+    precisa ter a menor chave dentre a $n-1$ chaves restantes;
+    similarmente, a probabilidade disso ocorrer é $1/(n-1)$.
+
+    Prosseguindo dessa forma,
+    concluímos que a probabilidade de o elemento $V[i]$ terminar na posição $i$
+    é de $1/(n-i+1)$;
+    a probabilidade de gerarmos a permutação identidade
+    é o produto destas probabilidades, que é $1/n!$.
+
+    Todas as outras permutações podem ser analisadas similarmente;
+    se $\sigma$ é a permutação em questão,
+    queremos saber a probabilidade de que $V[\sigma(1)]$ terminar na posição $1$,
+    e então a probabilidade de $V[\sigma(2)]$ terminar na posição $2$,
+    e, em geral, a probabilidade de $V[\sigma(i)]$ terminar na posição $i$.
+    a probabilidade de a permutação $\sigma$ ser gerada é $1/n!$.
+\end{proof}
+
+Este algoritmo
+(em particular sua análise)
+será usado na análise das treaps.
+Entretanto, para o simples propósito de gerar uma permutação aleatória,
+existe o algoritmo mais simples a seguir,
+extraído de~\cite[p.~357]{SedgewickFlajolet2013}.
 
 \begin{codebox}
     \Procname{$\proc{Shuffle}(V)$}
