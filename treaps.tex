@@ -110,3 +110,58 @@ existem tantas heaps quantas permutações sobre $n$ elementos.
 
     Concluímos que existem exatamente $n!$ heaps distintas.
 \end{proof}
+
+De posse da definição de heap,
+podemos definir treap.
+
+\begin{definition}
+    Uma árvore binária cujos nós possuem tanto chaves quanto prioridades associadas
+    é uma \emph{treap}
+    se for simultaneamente uma árvore de busca de acordo com as chaves
+    e um heap de acordo com as prioridades.
+\end{definition}
+
+As prioridades serão escolhidas aleatoriamente.
+
+Treaps são, portanto, árvores-heap.
+As chaves impõem a ordem dos nós;
+como existem $C_n$ diferentes árvores de busca possíveis para a mesma ordem,
+as prioridades aleatórias forçam a escolha de uma destas árvores.
+Dado um conjunto $X = \{ (k_i, p_i) \mid 1 \leq i \leq n) \}$,
+se todas as prioridades forem distintas,
+existe uma única treap que contém os elementos deste conjunto.
+Para construí-la,
+observe que a raíz da árvore necessariamente será o elemento de maior prioridade.
+Depois de fixada a raíz,
+a exigência do ordenamento determina quais nós ficarão na subárvore esquerda
+e quais ficarão na subárvore direita.
+Repita esta construção em cada subárvore;
+por indução, existe uma única treap em cada caso,
+o que garante a existência e unicidade da árvore atual.
+
+Alternativamente,
+podemos construir uma árvore binária de busca
+inserindo os nós em ordem decrescente de prioridade.
+A construção padrão sempre adiciona um novo nó como uma folha,
+portanto teremos um heap;
+e a ordem é garantida pelo próprio algoritmo.
+
+Este é o ``truque'' das treaps:
+ao escolher aleatoriamente uma prioridade para cada elemento,
+estamos, efetivamente,
+permutando os elementos e então inserindo-os na árvore.
+Conforme analisado no teorema~\ref{thm:shuffle-by-sorting},
+todas as permutações dos elementos são equiprováveis.
+Portanto,
+as árvores binárias de busca geradas
+seguem a distribuição analisada no teorema~\ref{thm:average-tree-depth};
+assim,
+sabemos que a profundidade média das treaps será $3 \log_2 n$.
+
+Operações como inserir e remover elementos
+podem ser entendidos como apenas alterando o conjunto de elementos $X$;
+como a treap é única e as prioridades são aleatórias,
+a distribuição das permutações geradas não é alterada,
+mantendo a profundidade esperada em $3 \log_2 n$.
+(Observe que a inserção de um novo elemento
+exige a geração de uma nova prioridade aleatória.)
