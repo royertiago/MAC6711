@@ -18,7 +18,12 @@ possuem profundidade similar às árvores auto-balanceadas,
 mas sem o overhead de fazer o balanceamento.
 
 Entretanto,
-sabe-se muito pouco sobre o comportamento de árvores binárias de busca
+simplesmente inserir elementos não basta;
+tipicamente, ocorrem inserções e remoções de maneira desordenada na árvore.
+Assim,
+não basta permutar os nós aleatoriamente apenas uma vez,
+pois a árvore varia ao longo da execução do programa.
+Sabe-se muito pouco sobre o comportamento de árvores binárias de busca
 quando inserções e remoções são intercaladas%
 ~\cite[p.~300]{CormenLeisersonRivestStein2009},
 portanto é necessário cuidado ao alterar uma árvore gerada aleatoriamente
@@ -57,59 +62,36 @@ chamam a condição acima de ``ordem de heap'';
 então, o que eles chamam de ``árvore em ordem de heap``,
 nós chamaremos simplesmente de ``heap''.
 
-Ao contrário das árvores binárias,
-existem tantas heaps quantas permutações sobre $n$ elementos.
-
-\begin{proposition}
-    Existem $n!$ diferentes heaps de $n$ elementos
-    cujas prioridades são números do conjunto $\{1, \dots, n\}$.
-\end{proposition}
-
-\begin{proof}
-    Iremos construir uma bijeção entre os dois conjuntos.
-    A figura~\ref{fig:heap-permutation} contém um exemplo deste mapeamento.
-
-    \begin{figure}[h]
-        \centering
-        \begin{tikzpicture}[binary tree layout, nodes={circle, draw}]
-            \node {8}
-            child { node {4}
-                child { node {2} }
-                child { node {3} }
+A figura~\ref{fig:heap} contêm um exemplo de heap.
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[binary tree layout, nodes={circle, draw}]
+        \node {8}
+        child { node {4}
+            child { node {2} }
+            child { node {3} }
+        }
+        child { node {7}
+            child[missing]
+            child { node {6}
+                child { node {1} }
+                child { node {5} }
             }
-            child { node {7}
-                child[missing]
-                child { node {6}
-                    child { node {1} }
-                    child { node {5} }
-                }
-            };
-        \end{tikzpicture}
-        \caption{Heap correspondente à permutação $(2, 4, 3, 8, 7, 1, 6, 5)$.}
-        \label{fig:heap-permutation}
-    \end{figure}
-
-    Dado um heap sobre o conjunto $\{1, \dots, n\}$,
-    construa uma permutação
-    simplesmente listando as prioridades ao percorrer a árvore em ordem simétrica
-    (in-order).
-    Dois heaps distintos produzirão permutações diferentes,
-    portanto, existem no máximo $n!$ heaps distintas.
-
-    Agora, dada uma permutação $\sigma$,
-    escolha $k$ tal que $\sigma(k) = n$; este é o maior valor da permutação.
-    Construa um heap colocando o elemento $k$ na raíz,
-    e então construa a subárvore esquerda recursivamente com a lista
-    $(\sigma(1), \dots, \sigma(k-1))$,
-    e a subárvore direita com a lista $(\sigma(k+1), \dots, \sigma(n))$.
-    Duas permutações diferentes diferem ou na posição do maior valor,
-    e nesse caso as subárvores geradas terão tamanhos diferentes,
-    ou em alguma das duas partições,
-    e neste caso alguma das subárvores será diferente.
-    Portanto, existem ao menos $n!$ heaps distintas.
-
-    Concluímos que existem exatamente $n!$ heaps distintas.
-\end{proof}
+        };
+    \end{tikzpicture}
+    \caption{Heap correspondente à permutação $(2, 4, 3, 8, 7, 1, 6, 5)$.}
+    \label{fig:heap}
+\end{figure}
+É interessante notar que existe uma bijeção simples entre
+permutações de $n$ elementos e heaps construídas com os números $\{1, \dots, n\}$.
+Dada um heap, para construir a permutação correspondente,
+basta percorrer os nós em ordem simétrica (in-order).
+Para reconstruir o heap a partir da permutação,
+tome $k$ como sendo o índice do maior elemento e coloque-o como raíz;
+construa a subárvore esquerda recursivamente
+usando os elementos nas posições $1, \dots, k-1$,
+e a subárvore direita usando os elemento nas posições $k+1, \dots, n$.
+Isso mostra que existem $n!$ heaps sobre um conjunto de elementos distintos.
 
 De posse da definição de heap,
 podemos definir treap.
