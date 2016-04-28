@@ -1,9 +1,10 @@
 \section{Aplicação: Treaps}
+\label{sec:treaps}
 
 De acordo com o teorema~\ref{thm:average-tree-depth},
 uma árvore de busca gerada aleatoriamente
 possui altura esperada logarítmica.
-Mais específicamente,
+Mais especificamente,
 uma árvore de $n$ nós
 deve ter profundidade pouco inferior a $3 \log_2 n$.
 Árvores auto-balanceadas,
@@ -18,11 +19,10 @@ possuem profundidade similar às árvores auto-balanceadas,
 mas sem o overhead de fazer o balanceamento.
 
 Entretanto,
-simplesmente inserir elementos não basta;
 tipicamente, ocorrem inserções e remoções de maneira desordenada na árvore.
 Assim,
 não basta permutar os nós aleatoriamente apenas uma vez,
-pois a árvore varia ao longo da execução do programa.
+pois a árvore e os elementos variam ao longo da execução do programa.
 Sabe-se muito pouco sobre o comportamento de árvores binárias de busca
 quando inserções e remoções são intercaladas%
 ~\cite[p.~300]{CormenLeisersonRivestStein2009},
@@ -35,7 +35,7 @@ A ideia é associar cada elemento a uma prioridade aleatória,
 e permutar o vetor de acordo com essa prioridade.
 Como a inserção/remoção de elementos
 não altera a distribuição de prioridades,
-a árvore contituará sendo uma árvore binária de busca aleatória,
+a árvore continuará sendo uma árvore binária de busca aleatória,
 preservando a profundidade esperada logarítmica.
 
 Para definir treaps, precisamos do conceito de \emph{heap}.
@@ -46,12 +46,12 @@ Para definir treaps, precisamos do conceito de \emph{heap}.
     se todos os nós da árvore tiverem prioridade maior do que seus filhos.
 \end{definition}
 
-É importante notar que o conceito alternativo de heap na literatura;
+É importante notar que há um conceito alternativo de heap na literatura;
 em textos como o livro de Cormen et. al.~\cite[p.~152]{CormenLeisersonRivestStein2009},
 um heap, além de satisfazer a exigência acima,
 ainda precisa ser uma árvore binária completa ou quase completa
 --- isto é, todos os níveis precisam estar completos,
-com excessão do último, que pode estar incompleto,
+com exceção do último, que pode estar incompleto,
 mas precisa ser preenchido da esquerda para a direita.
 Esta restrição adicional
 faz com que heaps possam ser eficientemente implementadas como um vetor,
@@ -87,7 +87,7 @@ permutações de $n$ elementos e heaps construídas com os números $\{1, \dots,
 Dada um heap, para construir a permutação correspondente,
 basta percorrer os nós em ordem simétrica (in-order).
 Para reconstruir o heap a partir da permutação,
-tome $k$ como sendo o índice do maior elemento e coloque-o como raíz;
+tome $k$ como sendo o índice do maior elemento e coloque-o como raiz;
 construa a subárvore esquerda recursivamente
 usando os elementos nas posições $1, \dots, k-1$,
 e a subárvore direita usando os elemento nas posições $k+1, \dots, n$.
@@ -113,8 +113,8 @@ Dado um conjunto $X = \{ (k_i, p_i) \mid 1 \leq i \leq n) \}$,
 se todas as prioridades forem distintas,
 existe uma única treap que contém os elementos deste conjunto.
 Para construí-la,
-observe que a raíz da árvore necessariamente será o elemento de maior prioridade.
-Depois de fixada a raíz,
+observe que a raiz da árvore necessariamente será o elemento de maior prioridade.
+Depois de fixada a raiz,
 a exigência do ordenamento determina quais nós ficarão na subárvore esquerda
 e quais ficarão na subárvore direita.
 Repita esta construção em cada subárvore;

@@ -2,13 +2,13 @@
 
 Como a seção~\ref{sec:contagem} mostra,
 a distribuição de árvores binárias é diferente
-da distribuição das árvores construidas a partir de permutações.
+da distribuição das árvores construídas a partir de permutações.
 Para gerar aleatoriamente uma árvore de busca binária,
-podes gerar aleatoriamente uma permutação
+podemos gerar aleatoriamente uma permutação
 e construir a árvore de busca binária associada.
 Esta seção descreve dois algoritmos para permutar aleatoriamente um vetor.
-(Então, uma permutação pode ser gerada, por exemplo,
-permutando aleatoriamente o vetor $(1, \dots, n)$.)
+(Assim, uma permutação aleatória pode ser gerada, por exemplo,
+permutando o vetor $(1, \dots, n)$.)
 Assumiremos que os vetores estão indexados em $1$.
 
 Assumiremos que existe um procedimento $\proc{random}(n)$
@@ -48,6 +48,7 @@ Assumindo que todas as prioridades são diferentes, podemos provar o seguinte te
     ao embaralhar um vetor de $n$ elementos,
     produz cada uma das $n!$ permutações
     com igual probabilidade.
+    \label{thm:shuffle-by-sorting}
 \end{proposition}
 
 \begin{proof}
@@ -72,15 +73,15 @@ Assumindo que todas as prioridades são diferentes, podemos provar o seguinte te
 
     Todas as outras permutações podem ser analisadas similarmente;
     se $\sigma$ é a permutação em questão,
-    queremos saber a probabilidade de que $V[\sigma(1)]$ terminar na posição $1$,
-    e então a probabilidade de $V[\sigma(2)]$ terminar na posição $2$,
-    e, em geral, a probabilidade de $V[\sigma(i)]$ terminar na posição $i$.
-    a probabilidade de a permutação $\sigma$ ser gerada é $1/n!$.
+    a probabilidade de que $V[\sigma(1)]$ terminar na posição $1$ é $1/n$,
+    e então a probabilidade de $V[\sigma(2)]$ terminar na posição $2$ é $1/(n-1)$,
+    e assim por diante.
+    A probabilidade de a permutação $\sigma$ ser gerada é $1/n!$.
 \end{proof}
 
 Este algoritmo
 (em particular sua análise)
-será usado na análise das treaps.
+será usado na seção~\ref{sec:treaps}.
 Entretanto, para o simples propósito de gerar uma permutação aleatória,
 existe o algoritmo mais simples a seguir,
 extraído de~\cite[p.~357]{SedgewickFlajolet2013}.

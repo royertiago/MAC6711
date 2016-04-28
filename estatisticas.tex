@@ -4,10 +4,10 @@
 
 Na construção de uma árvore binária de busca
 a partir de uma permutação de $(1, \dots, n)$,
-após adicionamos o primeiro número como a raíz,
+após adicionamos o primeiro número como a raiz,
 a adição dos próximos elementos colocará
-todos os números menores que a raíz na subárvore esquerda
-e todos os números maiores que a raíz na subárvore direita.
+todos os números menores que a raiz na subárvore esquerda
+e todos os números maiores que a raiz na subárvore direita.
 Na análise, portanto,
 precisaremos particionar uma permutação nestes dois subconjuntos.
 Assim,
@@ -17,7 +17,7 @@ e provaremos dois lemas que serão usados para facilitar sua manipulação.
 
 Por exemplo, ao construirmos uma árvore
 a partir da permutação $\sigma = (4, 5, 3, 6, 1, 2)$,
-$\sigma(1) = 4$ será a raíz,
+$\sigma(1) = 4$ será a raiz,
 a subárvore esquerda será a árvore construída a partir da lista $(3, 1, 2)$,
 e a subárvore direita, da lista $(5, 6)$.
 Como o valor dos nós da árvore não é relevante (apenas seu valor relativo é),
@@ -26,7 +26,7 @@ que é a mesma lista,
 mas ``normalizada'' para o intervalo $[1, 2]$.
 Chamaremos a lista $(3, 1, 2)$,
 a parte que vai para a esquerda, de $\sigma_<$
-(é a parte de $\sigma$ que é menor que $\sigma(1)$, a raíz),
+(é a parte de $\sigma$ que é menor que $\sigma(1)$, a raiz),
 e a lista $(1, 2)$,
 a que foi gerada a partir da lista $(5, 6)$, de $\sigma_>$.
 
@@ -116,7 +116,7 @@ O seguinte lema diz como.
     (basta escolher, por exemplo,
     a sequência $(k+1, \tau(1), \dots, \tau(k), k+2, k+3, \dots, n)$);
     portanto,
-    a forma do somatório esquerda da equação~\ref{eq:sum-partitions} está certa.
+    a forma do somatório do lado direito da equação~\ref{eq:sum-partitions} está certa.
     Falta verificar a constante $(n-1)!/k!$ de cada termo.
 
     Esta constante refere-se a quantas permutações $\sigma \in S_n$
@@ -231,12 +231,12 @@ podemos demonstrar o teorema.
             &= \frac{n^3 + 6n^2 + 11n + 6}{24} \\
             &\leq \frac {n^3 + 6n^3 + 11n^3 + 6n^3}{24} = n^3.
     \end{align*}
-    Encadeando as desigualdades, temos $2^{X_n} \leq Y_n \leq Z_n \leq n_3$.
+    Encadeando as desigualdades, temos $2^{X_n} \leq Y_n \leq Z_n \leq n^3$.
     Portanto, concluímos que $X_n \leq \log_2(n^3) = 3 \log_2 n$.
 \end{proof}
 
 É interessante notar que,
-como a altura mínima de uma árvore de busca binária é $\rfloor \log_2 n \rfloor$,
+como a altura mínima de uma árvore de busca binária é $\lfloor \log_2 n \rfloor$,
 embora pareça que tenhamos ``jogado bastante coisa fora'' na demonstração
 (em particular, na última sequência de desigualdades, em que só pegamos os dois extremos),
 ainda conseguimos provar que a altura média é menor ou igual a $3 \log_2 n$;
