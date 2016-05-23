@@ -1,3 +1,6 @@
 [submodule "bib"]
 	path = bib
 	url = https://github.com/royertiago/bib
+[submodule "tex-githooks"]
+	path = tex-githooks
+	url = https://github.com/royertiago/tex-githooks.git
