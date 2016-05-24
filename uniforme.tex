@@ -24,7 +24,7 @@ que não possui o problema de precisar de números grandes
 ou com possíveis erros de arredondamento
 (caso usemos números em ponto flutuante para fazer o ponderamento).
 
-Iremos construir uma bijeção entre árvores binárias e sequências de apostas,
+Construiremos uma bijeção entre árvores binárias e sequências de apostas,
 que estão definidas a seguir.
 
 \begin{definition}
@@ -47,7 +47,7 @@ e em cada derrota, ele perde uma ficha e marcamos $0$ em sua sequência.
 No instante em que o apostador acumular mais derrotas do que vitórias,
 ele terá perdido todas as suas fichas, inclusive a inicial,
 portanto sua sequência de apostas encerra-se aqui.
-A figura~\ref{fig:apostas}
+A Figura~\ref{fig:apostas}
 mostra o gráfico do saldo resultante da sequência de apostas $11100100100$.
 
 \begin{figure}[h]
@@ -91,7 +91,7 @@ que nos darão o número de sequências de apostas com $2n+1$ bits.
 \end{definition}
 
 Estamos ignorando aqui a decomposição $\epsilon w$
-pois ela é funcionalmente idêntica à decomposição $w \epsilon$
+pois ela se comporta da mesma maneira que a decomposição $w \epsilon$
 e só ``atrapalha'' os enunciados dos teoremas.
 Assim,
 existem $n$ permutações circulares (não necessariamente distintas)
@@ -138,7 +138,7 @@ de uma palavra com $n$ elementos.
 \end{proof}
 
 Concluímos assim que,
-se o conjunto das $\binom{2n+1}{n}$ palavras binárias
+se o conjunto das $\binom{2n+1}{n}$ palavras binárias com $n+1$ zeros e $n$ uns
 for particionado através de permutações circulares
 (isto é, duas cadeias são equivalentes se uma é uma permutação circular da outra),
 cada classe de equivalência terá exatamente $2n+1$ palavras.
@@ -225,7 +225,7 @@ sequências de apostas são essa forma canônica.
     e $\Delta w'[0..2n] = -1$.
     Assim, a permutação circular $yx$ de $w$
     possuiria um prefixo próprio com mais zeros que uns,
-    não constutituindo uma sequência de apostas.
+    não constituindo uma sequência de apostas.
 
     Concluímos que $w'$ é a única permutação circular de $w$
     que é uma sequência de apostas.
@@ -233,19 +233,19 @@ sequências de apostas são essa forma canônica.
 
 \begin{corollary}
     Existe um procedimento $\proc{Representative}(w)$
-    que retorna a permutação circular de $w$ que é uma sequência de apostas
-    (isto é, retorna o representante da classe de equivalência de $w$).
+    que devolve a permutação circular de $w$ que é uma sequência de apostas
+    (isto é, devolve o representante da classe de equivalência de $w$).
 \end{corollary}
 
 \begin{proof}
     Basta procurar o $k$ da demonstração do lema
-    e retornar a permutação correspondente.
+    e devolver a permutação correspondente.
 \end{proof}
 
 Portanto, cada classe de equivalência descrita acima
 possui exatamente uma sequência de apostas;
 assim, as sequências de apostas com $2n+1$ bits
-são equinumerosas às árvores binárias com $n$ nodos.
+são equinumerosas às árvores binárias com $n$ nós.
 Portanto,
 falta uma bijeção simples entre sequências de apostas e árvores binárias.
 Usaremos uma linguagem livre de contexto para fazer o mapeamento.
@@ -264,7 +264,7 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
 \begin{proof}
     Para provar que $G$ é não-ambígua,
     podemos, por exemplo, verificar que $G$ é $LL(1)$; % Olinto approves
-    como gramáticas $LL(1)$ não são ambíguas~\cite[p.~233]{AhoLamSethiUllman2006},
+    como gramáticas $LL(1)$ são não-ambíguas~\cite[p.~233]{AhoLamSethiUllman2006},
     $G$ é não-ambígua.
 
     As outras duas afirmações podem ser demonstradas através de indução.
@@ -277,7 +277,7 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
     assim, todos os prefixos menores que $|1x|$ satisfazem às exigências.
     Como $x$ possui um zero a mais, $1x$ terá o mesmo número de zeros e uns,
     sendo um prefixo ``válido'';
-    e, como nenhou prefixo próprio de $y$ possui mais zeros que uns,
+    e, como nenhum prefixo próprio de $y$ possui mais zeros que uns,
     podemos concatená-los com $1x$ para concluir que
     nenhum prefixo próprio de $w$ possui mais zeros que uns.
 
@@ -290,16 +290,16 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
 \begin{corollary}
     Existe uma função bijetiva $\proc{Parse}(w)$
     que, dada uma sequência de apostas $w$ de tamanho $2n+1$,
-    retorna uma árvore binária de $n$ nodos.
+    devolve uma árvore binária de $n$ nós.
 \end{corollary}
 
 \begin{proof}
-    Basta fazer o parsing de acordo com a gramátiga $G$ do lema.
+    Basta fazer o parsing de acordo com a gramática $G$ do lema.
     Como a gramática é não-ambígua,
     o parsing é injetor;
     como cada árvore binária corresponde a alguma sequência de apostas
     e essas sequências não se repetem,
-    de fato todas as sequências de apostas são geradas pela gramátiga $G$.
+    de fato todas as sequências de apostas são geradas pela gramática $G$.
     Assim, $\proc{Parse}$ reconhece todas as sequências de apostas,
     sendo, portanto, uma bijeção entre sequências de apostas e árvores binárias.
 \end{proof}

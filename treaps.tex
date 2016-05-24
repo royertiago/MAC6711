@@ -1,13 +1,13 @@
 \section{Aplicação: Treaps}
 \label{sec:treaps}
 
-De acordo com o teorema~\ref{thm:average-tree-depth},
+De acordo com o Teorema~\ref{thm:average-tree-depth},
 uma árvore de busca gerada aleatoriamente
 possui altura esperada logarítmica.
 Mais especificamente,
 uma árvore de $n$ nós
 deve ter profundidade pouco inferior a $3 \log_2 n$.
-Árvores auto-balanceadas,
+Árvores autobalanceadas,
 como AVL e rubro-negras,
 possuem profundidade inferior a $1.441 \log_2 n$ \cite[p.~460]{Knuth1998}
 e $2 \log_2 n$ \cite[p.~309]{CormenLeisersonRivestStein2009},
@@ -15,7 +15,7 @@ respectivamente.
 Portanto,
 na média,
 árvores binárias de busca geradas aleatoriamente
-possuem profundidade similar às árvores auto-balanceadas,
+possuem profundidade similar às árvores autobalanceadas,
 mas sem o overhead de fazer o balanceamento.
 
 Entretanto,
@@ -30,7 +30,9 @@ portanto é necessário cuidado ao alterar uma árvore gerada aleatoriamente
 para que sua ``aleatoriedade'' se mantenha,
 o que nos permite analisá-la.
 
-Treaps~\cite{AragonSeidel1989} são uma forma de preservar a aleatoriedade.
+Treaps
+(introduzidas por Aragon e Seidel~\cite{AragonSeidel1989})
+são uma forma de preservar a aleatoriedade.
 A ideia é associar cada elemento a uma prioridade aleatória,
 e permutar o vetor de acordo com essa prioridade.
 Como a inserção/remoção de elementos
@@ -62,7 +64,7 @@ chamam a condição acima de ``ordem de heap'';
 então, o que eles chamam de ``árvore em ordem de heap``,
 nós chamaremos simplesmente de ``heap''.
 
-A figura~\ref{fig:heap} contêm um exemplo de heap.
+A Figura~\ref{fig:heap} contêm um exemplo de heap.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[binary tree layout, nodes={circle, draw}]
@@ -132,11 +134,11 @@ Este é o ``truque'' das treaps:
 ao escolher aleatoriamente uma prioridade para cada elemento,
 estamos, efetivamente,
 permutando os elementos e então inserindo-os na árvore.
-Conforme analisado no teorema~\ref{thm:shuffle-by-sorting},
+Conforme analisado no Teorema~\ref{thm:shuffle-by-sorting},
 todas as permutações dos elementos são equiprováveis.
 Portanto,
 as árvores binárias de busca geradas
-seguem a distribuição analisada no teorema~\ref{thm:average-tree-depth};
+seguem a distribuição analisada no Teorema~\ref{thm:average-tree-depth};
 assim,
 sabemos que a profundidade média das treaps será $3 \log_2 n$.
 

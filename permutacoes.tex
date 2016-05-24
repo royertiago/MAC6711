@@ -9,9 +9,9 @@ e construir a árvore de busca binária associada.
 Esta seção descreve dois algoritmos para permutar aleatoriamente um vetor.
 (Assim, uma permutação aleatória pode ser gerada, por exemplo,
 permutando o vetor $(1, \dots, n)$.)
-Assumiremos que os vetores estão indexados em $1$.
+Suporemos que os vetores estão indexados iniciando em $1$.
 
-Assumiremos que existe um procedimento $\proc{random}(n)$
+Suporemos que existe um procedimento $\proc{random}(n)$
 que gera um número aleatório entre $1$ e $n$, com distribuição uniforme.
 Este problema foi bem estudado; ver, por exemplo, o livro~\cite{Knuth1997}.
 
@@ -41,7 +41,7 @@ tornando-as únicas.
     \li Sort $V$ using $P$ as the keys
 \end{codebox}
 
-Assumindo que todas as prioridades são diferentes, podemos provar o seguinte teorema.
+Supondo que todas as prioridades são diferentes, podemos provar o seguinte teorema.
 
 \begin{proposition}
     O algoritmo \proc{Shuffle-by-Sorting},

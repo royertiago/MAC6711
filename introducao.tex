@@ -4,7 +4,7 @@
     Uma \emph{árvore binária}
     é ou um único nó externo,
     ou um nó interno,
-    que é uma estrutura que contém duas outras árvores
+    que é uma estrutura que contém duas outras árvores binárias
     (a subárvore esquerda e a subárvore direita)
     \cite[p.~257]{SedgewickFlajolet2013}.
 \end{definition}
@@ -17,13 +17,13 @@ e usamos a estrutura da árvore para impor uma relação entre essas informaçõ
 Os nós externos costumam não carregar informação:
 eles são usados apenas para simplificar a definição de ``árvore''
 --- por exemplo,
-em vez de dizer que certo nodo ``não possui uma subárvore esquerda'',
+em vez de dizer que certo nó ``não possui uma subárvore esquerda'',
 nós dizemos que a subárvore esquerda é um nó externo.
 Podemos, por exemplo,
 implementar o nó externo como \texttt{null}.
 Neste artigo,
 desprezaremos a existência desses nós externos
-e nos referiremos aos nós internos simplesmente por ``nó'' (ou ``nodo'').
+e nos referiremos aos nós internos simplesmente por ``nó''.
 Assim, por exemplo,
 uma árvore que só contém um único nó externo
 será considerada ``vazia'', ou ``inexistente'' se for subárvore.
@@ -34,8 +34,8 @@ tem apenas um nó.
 
 \begin{definition}
     Uma \emph{árvore binária de busca}
-    é uma árvore binária em que
-    todos os nós estão associados a alguma chave,
+    é uma árvore binária em que todos os nós possuem uma \emph{chave}
+    (um valor de algum conjunto totalmente ordenado),
     de forma que a chave de um nó
     é maior que todos os nós de sua subárvore esquerda
     e menor que todos os nós de sua subárvore direita
@@ -93,9 +93,9 @@ uma árvore binária de busca não contém chaves repetidas.
 Além disso,
 para os propósitos deste artigo,
 o valor real das chaves não importa
---- o que é relevante é a \emph{ordem} entre eles.
+--- o que é relevante é a relação de ordem entre eles.
 Portanto,
-podemos assumir que,
+podemos supor que,
 numa árvore com $n$ nós,
 seus elementos são os números $1, \dots, n$.
 Assim,
@@ -114,8 +114,9 @@ e seu contraste estatístico com as árvores binárias uniformes.
     $\sigma(1) = 1, \sigma(2) = 3, \sigma(3) = 2$.
 
     O conjunto de todas as permutações de $n$ elementos será denotado por $S_n$.
-    A permutação vazia, sobre $0$ elementos, é válida;
-    assim, $|S_0| = 1$.
+    (Observe que a função vazia, definida em lugar nenhum,
+    é uma permutação sobre $0$ elementos;
+    portanto, $|S_0| = 1$.)
     O conjunto de todas as permutações, $\bigcup_{i \in \mathbb N} S_i$,
     será denotado por $\mathcal S$.
 \end{notation}

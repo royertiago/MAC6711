@@ -4,7 +4,7 @@
 
 Na construção de uma árvore binária de busca
 a partir de uma permutação de $(1, \dots, n)$,
-após adicionamos o primeiro número como a raiz,
+após fixarmos o primeiro número da permutação como a raiz da árvore,
 a adição dos próximos elementos colocará
 todos os números menores que a raiz na subárvore esquerda
 e todos os números maiores que a raiz na subárvore direita.
@@ -155,7 +155,7 @@ podemos demonstrar o teorema.
 ~\cite[p.~300]{CormenLeisersonRivestStein2009}.)
 
 \begin{proof}
-    Chame de $H$ a função que retorna a altura da árvore binária de busca
+    Chame de $H$ a função que devolve a altura da árvore binária de busca
     construída a partir de uma permutação dada;
     isto é, $H(\sigma)$ é a altura da árvore construída a partir de $\sigma$.
     A altura média,
@@ -165,7 +165,7 @@ podemos demonstrar o teorema.
     \begin{equation*}
         X_n = \frac{1}{n!} \sum_{\sigma \in S_n} H(\sigma).
     \end{equation*}
-    Iremos trabalhar não com a altura média,
+    Trabalharemos não com a altura média,
     mas com a ``altura exponencial'' média;
     isto é, com a média do valor de $2^{H(\sigma)}$.
     Defina $Y_n$ por
@@ -182,7 +182,7 @@ podemos demonstrar o teorema.
 
     Para $n = 0$, o somatório que define $Y_n$ é vazio,
     portanto $Y_0 = 0$.
-    Assuma doravante que $n > 0$.
+    Suponha doravante que $n > 0$.
 
     A função $H$ pode ser definida recursivamente por
     \begin{equation*}
