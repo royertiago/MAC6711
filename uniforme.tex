@@ -8,7 +8,7 @@ esse procedimento não gerará todas as árvores de $n$ nós uniformemente.
 
 Uma maneira simples de obter uma distribuição uniforme
 é usar os números de Catalão.
-Na demonstração da fórmula~\ref{eq:catalan},
+Na derivação da fórmula~(\ref{eq:catalan}),
 mostramos que existem $C_k C_{n-k-1}$ árvores binárias com $n$ nós
 tais que a subárvore esquerda possui $k$ nós.
 Assim,
@@ -138,7 +138,7 @@ de uma palavra com $n$ elementos.
 \end{proof}
 
 Concluímos assim que,
-se o conjunto das $\binom{2n+1}{n}$ palavras binárias com $n+1$ zeros e $n$ uns
+se o conjunto das $\binom{2n+1}{n}$ palavras binárias com $n$ uns e $n+1$ zeros
 for particionado através de permutações circulares
 (isto é, duas cadeias são equivalentes se uma é uma permutação circular da outra),
 cada classe de equivalência terá exatamente $2n+1$ palavras.
@@ -256,9 +256,8 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
         T \to 0 \mid 1TT
     \end{equation*}
     é não-ambígua, gera somente sequências de apostas,
-    e, se associarmos os nós internos de uma árvore binária com o terminal $1$
-    e os nós externos com o terminal $0$,
-    temos uma árvore de parsing para esta gramática.
+    e nós internos de uma árvore de parsing de $G$
+    são árvores binárias.
 \end{lemma}
 
 \begin{proof}
@@ -282,9 +281,12 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
     nenhum prefixo próprio de $w$ possui mais zeros que uns.
 
     Para a segunda,
-    observe que um nó externo corresponde a escolher a primeira produção
-    e um nó interno corresponde escolher a segunda
-    (pois, por indução, ambas as subárvores são árvores de parsing para $G$).
+    observe que os nós internos da árvore de parsing
+    correspondem à produção $T \to 1TT$.
+    Existem exatamente dois $T$'s nesta produção,
+    que, por indução, são árvores binárias.
+    Assim, os nós internos de uma árvore de parsing para $G$
+    constituem uma árvore binária.
 \end{proof}
 
 \begin{corollary}
@@ -296,8 +298,12 @@ Usaremos uma linguagem livre de contexto para fazer o mapeamento.
 \begin{proof}
     Basta fazer o parsing de acordo com a gramática $G$ do lema.
     Como a gramática é não-ambígua,
-    o parsing é injetor;
-    como cada árvore binária corresponde a alguma sequência de apostas
+    o parsing é injetor.
+    Uma sequência de apostas $w$ de $2n+1$ bits possui $n$ uns,
+    e cada bit $1$ produz exatamente um nó interno no parsing de $G$;
+    portanto, o parsing de $w$ produzirá uma árvore binária com $n$ nós.
+
+    Como cada árvore binária corresponde a alguma sequência de apostas
     e essas sequências não se repetem,
     de fato todas as sequências de apostas são geradas pela gramática $G$.
     Assim, $\proc{Parse}$ reconhece todas as sequências de apostas,
