@@ -19,8 +19,104 @@ enquanto que apenas a permutação $(1, 2, 3)$ gera a árvore~%
 Portanto,
 concluímos que o número de árvores com $n$ nós
 é menor do que o número de permutações com $n$ elementos.
-A proposição a seguir quantifica essa afirmação.
 
+Chame de $C_n$ o número de árvores binárias com $n$ nós;
+vamos montar uma relação de recorrência para $C_n$.\footnote{
+    Essa derivação foi baseada em~\cite[p.~125]{SedgewickFlajolet2013}.
+}
+
+Temos $C_0 = 1$, pois existe uma única árvore sem nós --- a árvore vazia\footnote{
+    Se levarmos em consideração os nós externos da árvore,
+    esta árvore é composta de um único nó externo.
+}.
+Para $n > 0$,
+podemos separar as árvores pelo tamanho da subárvore esquerda.
+Fixado um tamanho $k$ para a subárvore esquerda,
+existem $C_{k}$ formas de gerar a subárvore esquerda
+e $C_{n-k-1}$ formas de gerar a subárvore direita.
+Como estas formas são independentes,
+existem $C_{k} C_{n-k-1}$ árvores de $n$ nós
+cuja subárvore esquerda possui $k$ nós.
+Somando esses valores, obtemos a recorrência
+\begin{equation*}
+    C_n = \sum_{k = 0}^{n-1} C_k C_{n-k-1},
+\end{equation*}
+ou, equivalentemente,
+\begin{equation*}
+    C_{n+1} = \sum_{k = 0}^n C_{k} C_{n-k}.
+\end{equation*}
+
+O somatório à direita desta equação é uma convolução,
+o que sugere que possamos usar funções geradoras
+para extrair uma fórmula fechada para $C_n$.
+
+Seja $f$ a função geradora associada.
+Temos
+\begin{align*}
+    f(x)^2 &= \left(\sum_{k \geq 0} C_k x^k\right)^2 \\
+           &= \sum_{t \geq 0} x^t \left( \sum_{k = 0}^t C_k C_{t-k} \right) \\
+           &= \sum_{t \geq 0} x^t C_{t+1}
+            & \text{usando a recorrência}\\
+           &= \sum_{t \geq 1} x^{t-1} C_t \\
+           &= \frac 1 x \left( -1 + \sum_{t \geq 0} C_t x^t \right) \\
+           &= \frac{f(x) - 1}{x}. \\
+    x^2 f(x)^2 &= xf(x) - x \\
+    \left(xf(x) - \frac 1 2\right)^2 &= \frac 1 4 - x.
+\end{align*}
+Se $x$ estiver próximo de zero,
+então $xf(x) - 1/2$ será próximo de $-1/2$,
+portanto negativo.
+Assim, teremos
+\begin{align*}
+    \frac 1 2 - xf(x) &= \sqrt{\frac 1 4 - x} \\
+    xf(x) &= \frac 1 2 - \sqrt{\frac 1 4 - x} \\
+          &= \frac 1 2 (1 - (1 - 4x)^{1/2}).
+\end{align*}
+Agora, podemos expandir o termo $(1 - 4x)^{1/2}$
+usando a série binomial $(1 + u)^\alpha$ para $\alpha = 1/2$~\cite[p.~487]{Spivak1994}
+e $u = (-4x)$,
+obtendo
+\begin{align*}
+    xf(x) &= \frac 1 2 \left( 1 - \sum_{k \geq 0} \binom{1/2}{k} (-4x)^k \right) \\
+          &= -\frac 1 2 \sum_{k \geq 1} \binom{1/2}{k} (-4x)^k \\
+    f(x) &= 2 \sum_{k \geq 0} \binom{1/2}{k+1} (-4x)^k
+\end{align*}
+Trabalhando o coeficiente $\binom{1/2}{k+1}$, temos
+\begin{align*}
+    \binom{1/2}{k+1} &= \frac{
+        \frac 1 2 * (\frac 1 2 - 1) * (\frac 1 2 - 2) * \dots * (\frac 1 2 - k)
+    }{ (k+1)! } \\
+    &= (-1)^k \frac{
+        \frac 1 2 * (1 - \frac 1 2) * (2 - \frac 1 2) * \dots * (k - \frac 1 2)
+    }{ (k+1)! } \\
+    &= (-1)^k \frac{
+        1 * (2 - 1) * (4 - 1) * \dots * (2k - 1)
+    }{ 2^{k + 1} (k + 1)! } \\
+    &= (-1)^k \frac{ 1 * 1 * 3 * 5 * \dots * (2k - 1) }{2^{k+1} (k+1)!}
+        \frac{2 * 4 * 6 * \dots * 2k}{2^k k!} \\
+    &= (-1)^k \frac{ (2k)! }{2^{2k+1} (k+1)! k!} \\
+    &= \frac{(-1)^k}{2 * (k+1) * 4^k} \binom{2k}{k}.
+\end{align*}
+Substituindo de volta na equação, temos
+\begin{align*}
+    f(x) &= 2\sum_{k \geq 0}
+        \frac{(-1)^k}{2*(k+1) * 4^k} \binom{2k}{k} (-1)^k 4^k x^k \\
+        &= \sum_{k \geq 0} \frac 1 {k+1} \binom{2k} k x^k.
+\end{align*}
+Usando, por exemplo,
+a aproximação de Stirling,
+podemos mostrar que
+\begin{align*}
+    \binom{2k} k \sim \frac{4^k}{\sqrt{\pi k}};
+\end{align*}
+isto é, o limite da razão entre essas duas quantidades tende a $1$
+quando $k$ tende ao infinito.
+Portanto, a última série de potências converge para todo $x$ com $|x| < 1/4$.
+Assim, se fizermos as contas de trás para frente,
+todas essas séries de potências convergem.
+Concluímos que a derivação está certa.
+
+Provamos, portanto, a seguinte proposição.
 \begin{proposition}
     Existem $C_n$ diferentes árvores binárias com $n$ nós,
     em que
@@ -30,91 +126,3 @@ A proposição a seguir quantifica essa afirmação.
     \end{equation}
     são os números de Catalão.
 \end{proposition}
-
-(Essa demonstração foi baseada em~\cite[p.~125]{SedgewickFlajolet2013}.)
-
-\begin{proof}
-    Montaremos uma relação de recorrência para $C_n$
-    e usaremos funções geradoras para obter a fórmula~\ref{eq:catalan}.
-
-    Temos $C_0 = 1$, pois existe uma única árvore sem nós --- a árvore vazia\footnote{
-        Se levarmos em consideração os nós externos da árvore,
-        esta árvore é composta de um único nó externo.
-    }.
-    Para $n > 0$,
-    podemos separar as árvores pelo tamanho da subárvore esquerda.
-    Fixado um tamanho $k$ para a subárvore esquerda,
-    existem $C_{k}$ formas de gerar a subárvore esquerda
-    e $C_{n-k-1}$ formas de gerar a subárvore direita.
-    Como estas formas são independentes,
-    existem $C_{k} C_{n-k-1}$ árvores de $n$ nós
-    cuja subárvore esquerda possui $k$ nós.
-    Somando esses valores, obtemos a recorrência
-    \begin{align*}
-        C_n &= \sum_{k = 0}^{n-1} C_k C_{n-k-1} \\
-            &= \sum_{k = 1}^n C_{k-1} C_{n-k}.
-    \end{align*}
-    Seja $f$ a função geradora associada aos números de Catalão.
-    Temos
-    \begin{align*}
-        f(x)^2 &= \left(\sum_{k \geq 0} C_k x^k\right)^2 \\
-               &= \sum_{t \geq 0} x^t \left( \sum_{k = 0}^t C_k C_{t-k} \right) \\
-               &= \sum_{t \geq 0} x^t C_{t+1} \\
-               &= \sum_{t \geq 1} x^{t-1} C_t \\
-               &= \frac 1 x \left( -1 + \sum_{t \geq 0} C_t x^t \right) \\
-               &= \frac{f(x) - 1}{x}. \\
-        x^2 f(x)^2 &= xf(x) - x \\
-        \left(xf(x) - \frac 1 2\right)^2 &= \frac 1 4 - x.
-    \end{align*}
-    Se $x$ estiver próximo de zero,
-    então $xf(x) - 1/2$ será próximo de $-1/2$,
-    portanto negativo.
-    Assim, teremos
-    \begin{align*}
-        \frac 1 2 - xf(x) &= \sqrt{\frac 1 4 - x} \\
-        xf(x) &= \frac 1 2 - \sqrt{\frac 1 4 - x} \\
-              &= \frac 1 2 (1 - (1 - 4x)^{1/2})
-    \end{align*}
-    Agora, podemos expandir o termo $(1 - 4x)^{1/2}$ numa série binomial,
-    obtendo
-    \begin{align*}
-        xf(x) &= \frac 1 2 \left( 1 - \sum_{k \geq 0} \binom{1/2}{k} (-4x)^k \right) \\
-              &= -\frac 1 2 \sum_{k \geq 1} \binom{1/2}{k} (-4x)^k \\
-        f(x) &= 2 \sum_{k \geq 0} \binom{1/2}{k+1} (-4x)^k
-    \end{align*}
-    Trabalhando o coeficiente $\binom{1/2}{k+1}$, temos
-    \begin{align*}
-        \binom{1/2}{k+1} &= \frac{
-            \frac 1 2 * (\frac 1 2 - 1) * (\frac 1 2 - 2) * \dots * (\frac 1 2 - k)
-        }{ (k+1)! } \\
-        &= (-1)^k \frac{
-            \frac 1 2 * (1 - \frac 1 2) * (2 - \frac 1 2) * \dots * (k - \frac 1 2)
-        }{ (k+1)! } \\
-        &= (-1)^k \frac{
-            1 * (2 - 1) * (4 - 1) * \dots * (2k - 1)
-        }{ 2^{k + 1} (k + 1)! } \\
-        &= (-1)^k \frac{ 1 * 1 * 3 * 5 * \dots * (2k - 1) }{2^{k+1} (k+1)!}
-            \frac{2 * 4 * 6 * \dots * 2k}{2^k k!} \\
-        &= (-1)^k \frac{ (2k)! }{2^{2k+1} (k+1)! k!} \\
-        &= \frac{(-1)^k}{2 * (k+1) * 4^k} \binom{2k}{k}.
-    \end{align*}
-    Substituindo de volta na equação, temos
-    \begin{align*}
-        f(x) &= 2\sum_{k \geq 0}
-            \frac{(-1)^k}{2*(k+1) * 4^k} \binom{2k}{k} (-1)^k 4^k x^k \\
-            &= \sum_{k \geq 0} \frac 1 {k+1} \binom{2k} k x^k.
-    \end{align*}
-    Usando, por exemplo,
-    a aproximação de Stirling,
-    podemos mostrar que
-    \begin{align*}
-        \binom{2k} k \sim \frac{4^k}{\sqrt{\pi k}};
-    \end{align*}
-    isto é, o limite da razão entre essas duas quantidades tende a $1$
-    quando $k$ tende ao infinito.
-    Portanto, a última série de potências converge para todo $x$ com $|x| < 1/4$.
-    Assim, se fizermos as contas de trás para frente,
-    todas essas séries de potências convergem.
-    Concluímos que a derivação está certa,
-    provando, assim, o teorema.
-\end{proof}
