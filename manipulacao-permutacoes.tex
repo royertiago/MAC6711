@@ -1,0 +1,138 @@
+\subsection{Manipulação de permutações}
+
+Na construção de uma árvore binária de busca
+a partir de uma permutação de $(1, \dots, n)$,
+após fixarmos o primeiro número da permutação como a raiz da árvore,
+a adição dos próximos elementos colocará
+todos os números menores que a raiz na subárvore esquerda
+e todos os números maiores que a raiz na subárvore direita.
+Na análise, portanto,
+precisaremos particionar uma permutação nestes dois subconjuntos.
+Esta seção define uma notação para esta operação
+e prova dois lemas que serão usados para facilitar sua manipulação.
+
+Por exemplo, ao construirmos uma árvore
+a partir da permutação $\sigma = (4, 5, 3, 6, 1, 2)$,
+$\sigma(1) = 4$ será a raiz,
+a subárvore esquerda será a árvore construída a partir da lista $(3, 1, 2)$,
+e a subárvore direita, da lista $(5, 6)$.
+Como o valor dos nós da árvore não é relevante (apenas seu valor relativo é),
+podemos supor que a subárvore direita foi gerada pela lista $(1, 2)$,
+que é a mesma lista,
+mas ``normalizada'' para o intervalo $[1, 2]$.
+Chamaremos a lista $(3, 1, 2)$,
+a parte que vai para a esquerda, de $\sigma_<$
+(é a parte de $\sigma$ que é menor que $\sigma(1)$, a raiz),
+e a lista $(1, 2)$,
+a que foi gerada a partir da lista $(5, 6)$, de $\sigma_>$.
+
+A definição a seguir formaliza estes nomes.
+
+\begin{definition}
+    Seja $\sigma \in S_n$ uma permutação.
+    Defina $\sigma_<$ e $\sigma_>$
+    como sendo a sequência dos elementos menores e maiores que $\sigma(1)$
+    (o primeiro elemento)
+    respectivamente,
+    normalizados para os intervalo $\{1, \sigma(1) - 1\}$ e $\{1, n - \sigma(1)\}$,
+    respectivamente.
+    Isto é,
+    se $\{a_i\}_{i = 1}^{\sigma(1)-1}$ é a sequência crescente
+    dos índices satisfazendo $\sigma(a_i) < \sigma(1)$,
+    então $\sigma_< \in S_{\sigma(1) - 1}$
+    é a permutação que satisfaz $\sigma_<(i) = \sigma(a_i)$ para todo $i$;
+    e se $\{b_i\}_{i = 1}^{n - \sigma(1)}$ é a sequência crescente
+    dos índices satisfazendo $\sigma(b_i) > \sigma(1)$,
+    então $\sigma_> \in S_{n - \sigma(1)}$
+    é a permutação que satisfaz $\sigma_>(i) = \sigma(b_i) - \sigma(1)$ para todo $i$.
+\end{definition}
+
+A normalização que $\sigma_>$ sofre garante que
+tanto $\sigma_<$ quanto $\sigma_>$ sejam permutações.
+Como usaremos ambas,
+é importante sabermos como converter somatórios sobre um tipo no outro.
+
+\begin{lemma}
+    Se $f: \mathcal S \to \mathbb N$ é uma função qualquer,
+    então
+    \begin{equation}
+        \sum_{\sigma \in S_n} f(\sigma_<) = \sum_{\sigma \in S_n} f(\sigma_>).
+        \label{eq:lower-permutation-to-upper}
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Se $\sigma \in S_n$,
+    defina $\overline \sigma \in S_n$
+    (o ``conjugado'' de $\sigma$)
+    por $\overline \sigma(i) = n + 1 - \sigma(i)$.
+    Esta operação é bijetora
+    e inverte a relação de ordem entre os elementos de $\sigma$.
+    Dessa forma, os elementos maiores que $\sigma(1)$, em $\sigma$,
+    se tornarão menores que $\overline \sigma(1)$, em $\overline \sigma$.
+    Portanto,
+    os elementos de $(\overline \sigma)_<$ são,
+    exatamente,
+    os conjugados dos elementos de $\sigma_>$;
+    portanto, temos
+    \begin{equation}
+        (\overline \sigma)_< = \overline{\sigma_>}.
+        \label{eq:conjugate-permutation}
+    \end{equation}
+    Portanto,
+    \begin{align*}
+        \sum_{\sigma \in S_n} f(\sigma_<) &= \sum_{\sigma \in S_n} f((\overline \sigma)_<)
+        &\text{pois $\sigma \mapsto \overline \sigma$ é uma bijeção} \\
+        &= \sum_{\sigma \in S_n} f(\overline{\sigma_>})
+        &\text{pela equação~\ref{eq:conjugate-permutation}} \\
+        &= \sum_{\sigma \in S_n} f(\sigma_>)
+        &\text{pois $\sigma \mapsto \overline \sigma$ é uma bijeção.}
+    \end{align*}
+\end{proof}
+
+Como $\sigma_<$ será uma permutação,
+o somatório do lado direito da equação~\ref{eq:lower-permutation-to-upper}
+pode ser reescrito sem usar o subscrito ${}_<$.
+O seguinte lema diz como.
+
+\begin{lemma}
+    Se $f: \mathcal S \to \mathbb N$ é uma função qualquer,
+    então
+    \begin{equation}
+        \sum_{\sigma \in S_n} f(\sigma_<)
+            = \sum_{k = 0}^{n-1} \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} f(\sigma).
+        \label{eq:sum-partitions}
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Primeiro,
+    observe que toda permutação $\tau \in S_k$, para $k < n$,
+    é $\sigma_<$ para algum $\sigma \in S_n$
+    (basta escolher, por exemplo,
+    a sequência $(k+1, \tau(1), \dots, \tau(k), k+2, k+3, \dots, n)$);
+    portanto,
+    a forma do somatório do lado direito da equação~\ref{eq:sum-partitions} está certa.
+    Falta verificar a constante $(n-1)!/k!$ de cada termo.
+
+    Esta constante refere-se a quantas permutações $\sigma \in S_n$
+    satisfazem $\sigma_< = \tau$ para alguma permutação $\tau \in S_k$ dada.
+    Fixe, portanto, $\tau \in S_k$.
+    Para que $\sigma_< = \tau$,
+    primeiro, precisamos ter $\sigma(1) = k+1$,
+    pois existem exatamente $k$ elementos em $\sigma$ que são menores que $\sigma(1)$
+    --- são esses que virarão os elementos de $\tau$.
+    Existem $n-1$ posições que não foram fixadas em $\sigma$;
+    dessas, $k$ serão os números $\tau(1), \dots, \tau(k)$,
+    em sequência;
+    são, portanto, $\binom{n-1}{k}$ diferentes conjuntos de posições
+    que terão os elementos de $\tau$.
+
+    Fixadas essas posições,
+    precisamos distribuir os $n - k - 1$ números entre $k+1$ e $n$
+    nas $n - k - 1$ posições restantes.
+    Como a ordem não altera o valor de $\sigma_<$,
+    todas as $(n - k - 1)!$ permutações são válidas.
+    Assim, o número total de permutações $\sigma \in S_n$
+    tal que $\sigma_< = \tau$ é $\binom{n-1}{k} (n-k-1)! = (n-1)!/k!$.
+\end{proof}
