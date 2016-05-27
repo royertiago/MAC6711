@@ -1,0 +1,83 @@
+\subsection{Comprimento total dos caminhos internos}
+
+\begin{definition}
+    Dada uma árvore binária $T$ e um nó interno $v$ de $T$,
+    o comprimento do caminho interno de $v$
+    é a quantidade de vértices no caminho de $v$ até a raiz de $T$,
+    excluindo o próprio vértice
+    --- isto é, é a quantidade de arestas entre $v$ e a raiz.
+    O comprimento total é simplesmente a soma,
+    para todos os nós,
+    dos comprimentos de seus caminhos internos.
+    \cite[p.~272]{SedgewickFlajolet2013}
+\end{definition}
+
+Dada uma permutação $\sigma$,
+denotaremos o comprimento total dos caminhos internos
+da árvore de busca binária construída a partir de $\sigma$ por $\ipl(\sigma)$.
+
+Para construir uma árvore de busca binária a partir de uma permutação,
+cada possível caminho entre a raiz e um nó é percorrido exatamente uma vez,
+no momento de inserir este nó,
+para descobrir sua posição;
+portanto,
+$\ipl(\sigma)$ é o custo de construção da árvore de busca binária associada a $\sigma$;
+portanto,
+é interessante possuir uma estimativa do valor médio de $\ipl(\sigma)$
+para $\sigma \in S_n$.
+
+Defina $D_n$ por
+\begin{equation*}
+    D_n = \frac{1}{n!} \sum_{\sigma \in S_n} \ipl(\sigma).
+\end{equation*}
+Dada uma permutação $\sigma$,
+o custo de inserir a raiz é nulo,
+pois sabemos de antemão seu lugar final.
+Considere as subárvores à esquerda e à direita,
+geradas por $\sigma_<$ e $\sigma_>$.
+Cada vértice, ao ser inserido na subárvore à esquerda,
+precisa de uma comparação com a raiz (para saber em qual subárvore será inserido)
+e mais o mesmo número de comparações que teria para ser inserido em $\sigma_<$
+--- pois é a mesma árvore.
+O mesmo vale para $\sigma_>$;
+portanto, $\ipl(\sigma) = n-1 + \ipl(\sigma_<) + \ipl(\sigma_>)$.
+
+Substituindo na equação, temos
+\begin{align*}
+    D_n &= \frac{1}{n!} \sum_{\sigma \in S_n} n-1 + \ipl(\sigma_<) + \ipl(\sigma_>) \\
+        &= n-1 + \frac{2}{n!} \sum_{k=0}^{n-1} \frac{(n-1)!}{k!}
+            \sum{\sigma \in S_k} \ipl(\sigma) & \text{
+            pelas equações~\ref{eq:lower-permutation-to-upper} e \ref{eq:sum-partitions}
+        } \\
+        &= n-1 + \frac 2 n \sum_{k=0}^{n-1} D_k.
+\end{align*}
+Multiplicando ambos os lados da equação por $n$, temos
+\begin{align*}
+    nD_n &= n(n-1) + 2 \sum_{k=0}^{n-1} D_k \\
+         &= 2(n-1) + 2 D_{n-1} + (n-1)(n-2) + 2\sum_{k=0}^{n-1} D_k \\
+         &= 2(n-1) + 2 D_{n-1} + (n-1)D_{n-1} \\
+         &= 2(n-1) + (n+1) D_{n-1}.
+\end{align*}
+Agora, dividindo ambos os lados da equação por $n(n+1)$,
+obtemos uma recorrência simples para $D_n/(n+1)$.
+\begin{align*}
+    \frac{D_n}{n+1} &= \frac{2(n-1)}{n(n+1)} + \frac{D_{n-1}}{n} \\
+        &= \sum_{k=1}^n \frac{2(k-1)}{k(k+1)} + \frac{D_0}{1} \\
+        &= \sum_{k=1}^n \frac{2(k-1)}{k(k+1)} \\
+        &= 2\sum_{k=1}^n \frac{k}{k(k+1)} - 2 \sum_{k=1}^n \frac{1}{k(k+1)} \\
+        &= 2H_{n+1} - 2 - 2(1 - 1/(n+1)),
+\end{align*}
+em que $H_n = \sum_{k=1}^n 1/n$ são os números harmônicos.
+
+Finalmente, multiplicando por $n+1$ obtemos a equação
+\begin{equation}
+    D_n = 2(n+1)H_{n+1} - 4n - 2.
+    \label{eq:construction-cost}
+\end{equation}
+Sabe-se que $H_n \sim \ln n$; portanto, provamos o seguinte.
+
+\begin{proposition}
+    O custo de construção médio de uma árvore de busca binária
+    a partir de uma permutação de $n$ elementos é $O(n \ln n)$.
+    \label{thm:construction-cost}
+\end{proposition}

@@ -1,7 +1,31 @@
 \subsection{Altura média de uma árvore de busca binária}
 
-De posse destes dois lemas,
-podemos demonstrar o teorema.
+Dividindo o lado direito da equação~(\ref{eq:construction-cost}) por $n$,
+concluímos que a altura média de um vértice numa árvore de busca binária
+é assintoticamente igual a $2 \ln n$.
+Como $2 \ln n = 2 \ln 2 \cdot \log_2 n$
+e $2 \ln 2 \approx 1.386$,
+concluímos que os vértices de árvores de busca binárias
+estão aproximadamente $40\%$ mais distantes do que o ótimo, $\log_2 n$.
+
+Entretanto,
+isso dá pouca garantia em relação a altura da árvore.
+Por exemplo,
+uma árvore com $n$ vértices e altura $k$
+pode ser constituída de um único ramo com $k$ vértices,
+cujo custo de construção soma $k(k-1)/2$,
+e os demais vértices completamente balanceados noutro ramo da árvore,
+somando pouco menos de $2 (n-k) \log_2 (n-k)$ para o custo de construção.
+Escolhendo $k = \sqrt n$,
+construímos uma árvore de altura $\sqrt n$,
+mas a altura média dos vértices é menor que $4 \log_2 n$.
+Assim,
+o Teorema~\ref{thm:construction-cost}
+garante apenas que altura média de uma árvore não ultrapassará $\sqrt n$.
+
+Mas,
+através de uma demonstração diferente,
+podemos provar que a altura média é, de fato, logarítmica.
 
 \begin{theorem}
     A altura média de uma árvore de busca binária
@@ -10,6 +34,7 @@ podemos demonstrar o teorema.
     \label{thm:average-tree-depth}
 \end{theorem}
 
+Observe que este teorema implica o Teorema~\ref{thm:construction-cost}.
 (A demonstração construída nesta seção é adaptada do livro de Cormen et al.%
 ~\cite[p.~300]{CormenLeisersonRivestStein2009}.)
 
