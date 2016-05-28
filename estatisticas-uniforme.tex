@@ -1,0 +1,21 @@
+\subsection{Estatísticas para distribuição uniforme de árvores binárias}
+
+Para árvores binárias uniformemente distribuídas,
+a análise é consideravelmente mais complexa,
+portanto será apenas enunciada.
+
+O comprimento total dos caminhos internos é
+em média,
+\begin{equation*}
+    \frac{(n+1) 4^n}{\binom{2n}{n}} \sim n \sqrt{\pi n}
+\end{equation*}
+para uma árvore com $n$ nós~\cite[p.~288]{SedgewickFlajolet2013}.
+Portanto,
+a profundidade média de um nó é $\sqrt{\pi n}$,
+que é significativamente maior do que a profundidade média $2 \ln n$
+para árvores de busca binárias.
+
+E, assim como no caso das árvores de busca binárias,
+a altura média de uma árvore binária gerada uniformemente
+é proporcional a altura média dos nós, $\sqrt{\pi n} + O(1)$
+\cite[p.~306]{SedgewickFlajolet2013}.
