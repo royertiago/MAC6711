@@ -145,7 +145,106 @@ sabemos que a profundidade média das treaps será $3 \log_2 n$.
 Operações como inserir e remover elementos
 podem ser entendidos como apenas alterando o conjunto de elementos $X$;
 como a treap é única e as prioridades são aleatórias,
-a distribuição das permutações geradas não é alterada,
+inserção e remoção alteram diretamente a permutação subjacente,
 mantendo a profundidade esperada em $3 \log_2 n$.
 (Observe que a inserção de um novo elemento
 exige a geração de uma nova prioridade aleatória.)
+
+\subsection{Inserção e remoção}
+Esta seção descreve uma implementação de inserção e remoção de valores numa treap.
+Os algoritmos estão em pseudocódigo;
+uma versão em \verb"C++" está disponível em
+\verb"github.com/royertiago/MAC6711".
+Estes algoritmos foram baseados no artigo de Seidel e Aragon~%
+\cite[p.~450]{SeidelAragon1996},
+que contém uma discussão mais completa sobre aspectos práticos da implementação de treaps.
+
+Ignoraremos tanto a etapa da geração aleatória de prioridades
+quanto casos de uso como mapeamentos e filas de prioridade;
+portanto,
+o nó da treap contém quatro membros:
+uma chave, uma prioridade,
+e dois ponteiros para as subárvores.
+
+Assumiremos, nesta seção,
+que a passagem de parâmetros ocorre por referência.
+
+Em ambos os casos,
+trabalharemos recursivamente.
+Para a inserção,
+após inserir o novo elemento na subárvore esquerda (digamos),
+pode ser que a raiz da subárvore esquerda
+tenha ficado com prioridade maior do que o nó atual.
+Neste caso,
+rotacionando o nó atual para a direita promove o outro nó a raiz,
+sem alterar a ordem das chaves
+(que é preservada pela rotação)
+nem das prioridades
+(pois apenas um novo nó foi inserido na subárvore esquerda).
+A inserção na subárvore direita é simétrica.
+
+\begin{codebox}
+    \Procname{$\proc{Treap-Insert}(T, \id{key}, \id{priority})$}
+    \li \If $T == \id{null}$
+    \li \Then
+            $T \gets \proc{New-Node(\id{key}, \id{priority})}$
+    \li \ElseIf $\id{key} < \attrib{T}{key}$
+    \li \Then
+            $\proc{Treap-Insert}(\attrib{T}{lchild}, \id{key}, \id{priority})$
+    \li     \If $\attribb{T}{lchild}{priority} > \attrib{T}{priority}$
+    \li         \Then $\proc{Rotate-Right}(T)$
+            \End
+    \li \ElseIf $\attrib{T}{key} < \id{key}$
+    \li \Then
+            $\proc{Treap-Insert}(\attrib{T}{rchild}, \id{key}, \id{priority})$
+    \li     \If $\attribb{T}{rchild}{priority} > \attrib{T}{priority}$
+    \li         \Then $\proc{Rotate-Left}(T)$
+            \End
+    \li \ElseNoIf
+    \li     \Comment A chave já aparece na árvore.
+        \End
+\end{codebox}
+
+Para a remoção,
+faremos em duas partes:
+primeiro, localizar a subárvore na treap
+que possui o elemento a ser removido como raiz.
+
+\begin{codebox}
+    \Procname{$\proc{Treap-Remove}(T, \id{key})$}
+    \li \If $T == \id{null}$
+    \li \Then \Comment Elemento não aparece na árvore.
+    \li \ElseIf $\id{key} < \attrib{T}{key}$
+    \li \Then $\proc{Treap-Remove}(\attrib{T}{lchild}, \id{key})$
+    \li \ElseIf $\attrib{T}{key} < \id{key}$
+    \li \Then $\proc{Treap-Remove}(\attrib{T}{rchild}, \id{key})$
+    \li \ElseNoIf
+    \li     $\proc{Root-Remove}(T)$
+        \End
+\end{codebox}
+
+E, agora, excluiremos a raiz desta subárvore.
+Se algum dos nós filhos da raiz não estiver presente,
+basta substituí-lo pelo outro nó (que pode ser nulo);
+caso contrário,
+rotacionaremos a raiz para baixo
+e chamaremos o procedimento recursivamente.
+Em algum momento,
+o nó a ser removido se tornará folha,
+caindo no caso anterior.
+
+\begin{codebox}
+    \Procname{$\proc{Root-Remove}(T)$}
+    \li \If $\attrib{T}{lchild} == \id{null}$
+    \li \Then $T \gets \attrib{T}{rchild}$
+    \li \ElseIf $\attrib{T}{rchild} == \id{null}$
+    \li \Then $T \gets \attrib{T}{lchild}$
+    \li \ElseIf $\attribb{T}{lchild}{priority} < \attribb{T}{rchild}{priority}$
+    \li \Then
+            $\proc{Rotate-Left}(T)$
+    \li     $\proc{Root-Remove}(\attrib{T}{lchild})$
+    \li \ElseNoIf
+    \li     $\proc{Rotate-Right}(T)$
+    \li     $\proc{Root-Remove}(\attrib{T}{rchild})$
+        \End
+\end{codebox}
