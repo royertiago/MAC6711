@@ -1,0 +1,20 @@
+\section{Considerações Finais}
+
+Conforme observado no texto,
+árvores de busca binárias geradas a partir de permutações aleatórias
+possuem uma distribuição bastante diferente da uniforme.
+A distribuição uniforme é mais complicada de ser gerada
+e produz árvores com altura média significativamente maior
+do que a distribuição das árvores de busca.
+
+Árvores de busca geradas a partir de permutações aleatórias
+possuem altura média pouco inferior a $3\log_2 n$,
+ficando próximo do mínimo teórico $\lfloor \log_2 n \rfloor$.
+Treaps exploram essa propriedade,
+mexendo diretamente na permutação aleatória
+para garantir que a profundidade média se mantenha em $3 \log_2 n$.
+
+A implementação de treaps é consideravelmente mais simples do que árvores AVL e RB,
+e, como os testes mostraram,
+o desempenho é semelhante.
+Isso sugere que treaps sejam uma alternativa viável para árvores balanceadas.
