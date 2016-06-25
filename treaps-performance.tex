@@ -42,9 +42,11 @@ quando os elementos foram inseridos em ordem.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{l c c c c}
-        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
-            & AVL & RB & MT & Xorshift \\
+    \begin{tabular}{l r r r r}
+        \cmidrule{2-5}
+        & \multicolumn{2}{c}{Árvores} & \multicolumn{2}{c}{Treap} \\
+        \cmidrule(r){2-3} \cmidrule(l){4-5}
+        & \multicolumn{1}{c}{AVL} & \multicolumn{1}{c}{RB} & \multicolumn{1}{c}{MT} & \multicolumn{1}{c}{Xorshift} \\
         \midrule
         $100\,000$ valores aleatórios & 56.1 & 46.3 & 49.9 & 44.2 \\
         $1\,000\,000$ valores aleatórios & 1166.6 & 934.9 & 1306.1 & 1174.8 \\
@@ -66,9 +68,11 @@ Os resultados estão na Tabela~\ref{tab:insert-remove}.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{l c c c c}
-        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
-            & AVL & RB & MT & Xorshift \\
+    \begin{tabular}{l r r r r}
+        \cmidrule{2-5}
+        & \multicolumn{2}{c}{Árvores} & \multicolumn{2}{c}{Treap} \\
+        \cmidrule(r){2-3} \cmidrule(l){4-5}
+        & \multicolumn{1}{c}{AVL} & \multicolumn{1}{c}{RB} & \multicolumn{1}{c}{MT} & \multicolumn{1}{c}{Xorshift} \\
         \midrule
         $100\,000$ valores aleatórios & 357.2 & 465.2 & 426.1 & 424.2 \\
         $1\,000\,000$ valores aleatórios & 2108.4 & 1946.9 & 2706.2 & 2686.8 \\
@@ -99,9 +103,11 @@ Os resultados estão na Tabela~\ref{tab:mixed}.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{l c c c c}
-        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
-            & AVL & RB & MT & Xorshift \\
+    \begin{tabular}{l r r r r}
+        \cmidrule{2-5}
+        & \multicolumn{2}{c}{Árvores} & \multicolumn{2}{c}{Treap} \\
+        \cmidrule(r){2-3} \cmidrule(l){4-5}
+        & \multicolumn{1}{c}{AVL} & \multicolumn{1}{c}{RB} & \multicolumn{1}{c}{MT} & \multicolumn{1}{c}{Xorshift} \\
         \midrule
         $270\,000$ operações, em sequência & 112.4 & 110.6 & 105.3 & 91.9 \\
         $2\,700\,000$ operações, em sequência & 2586.8 & 2246.1 & 3260.0 & 2754.9 \\
