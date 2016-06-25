@@ -84,8 +84,6 @@ Observe que este teorema implica o Teorema~\ref{thm:construction-cost}.
     \begin{align*}
         Y_n &= \frac{1}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma)} \\
             &< \frac{2}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma_<)} + 2^{H(\sigma_>)} \\
-            &= \frac{4}{n!} \sum_{\sigma \in S_n} 2^{H(\sigma_<)}
-        &\text{pela equação~\ref{eq:lower-permutation-to-upper}} \\
         &= \frac{4}{n!} \sum_{k = 0}^{n-1}
             \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} 2^{H(\sigma)}
             &\text{pela equação~\ref{eq:sum-partitions}} \\

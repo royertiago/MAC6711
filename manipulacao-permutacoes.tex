@@ -49,70 +49,36 @@ A definição a seguir formaliza estes nomes.
 
 A normalização que $\sigma_>$ sofre garante que
 tanto $\sigma_<$ quanto $\sigma_>$ sejam permutações.
-Como usaremos ambas,
-é importante sabermos como converter somatórios sobre um tipo no outro.
+Em particular, se $\sigma$ é uma permutação de $S_n$,
+então $\sigma_<$ será uma permutação de $S_{\sigma(1) - 1}$
+e $\sigma_>$ será uma permutação de $S_{n - \sigma(1)}$.
+Portanto,
+somatórios feitos sobre os ``pedaços'' de permutações $\sigma_<$ e $\sigma_>$
+podem ser convertidos em somatórios sem os subscritos $_<$ e $_>$.
+Entretanto,
+podemos ter $\sigma_> = \sigma'_>$ mesmo que $\sigma \neq \sigma'$;
+o lema a seguir diz como lidar com isso.
 
 \begin{lemma}
     Se $f: \mathcal S \to \mathbb N$ é uma função qualquer,
     então
     \begin{equation}
-        \sum_{\sigma \in S_n} f(\sigma_<) = \sum_{\sigma \in S_n} f(\sigma_>).
-        \label{eq:lower-permutation-to-upper}
-    \end{equation}
-\end{lemma}
-
-\begin{proof}
-    Se $\sigma \in S_n$,
-    defina $\overline \sigma \in S_n$
-    (o ``conjugado'' de $\sigma$)
-    por $\overline \sigma(i) = n + 1 - \sigma(i)$.
-    Esta operação é bijetora
-    e inverte a relação de ordem entre os elementos de $\sigma$.
-    Dessa forma, os elementos maiores que $\sigma(1)$, em $\sigma$,
-    se tornarão menores que $\overline \sigma(1)$, em $\overline \sigma$.
-    Portanto,
-    os elementos de $(\overline \sigma)_<$ são,
-    exatamente,
-    os conjugados dos elementos de $\sigma_>$;
-    portanto, temos
-    \begin{equation}
-        (\overline \sigma)_< = \overline{\sigma_>}.
-        \label{eq:conjugate-permutation}
-    \end{equation}
-    Portanto,
-    \begin{align*}
-        \sum_{\sigma \in S_n} f(\sigma_<) &= \sum_{\sigma \in S_n} f((\overline \sigma)_<)
-        &\text{pois $\sigma \mapsto \overline \sigma$ é uma bijeção} \\
-        &= \sum_{\sigma \in S_n} f(\overline{\sigma_>})
-        &\text{pela equação~\ref{eq:conjugate-permutation}} \\
-        &= \sum_{\sigma \in S_n} f(\sigma_>)
-        &\text{pois $\sigma \mapsto \overline \sigma$ é uma bijeção.}
-    \end{align*}
-\end{proof}
-
-Como $\sigma_<$ será uma permutação,
-o somatório do lado direito da equação~\ref{eq:lower-permutation-to-upper}
-pode ser reescrito sem usar o subscrito ${}_<$.
-O seguinte lema diz como.
-
-\begin{lemma}
-    Se $f: \mathcal S \to \mathbb N$ é uma função qualquer,
-    então
-    \begin{equation}
-        \sum_{\sigma \in S_n} f(\sigma_<)
-            = \sum_{k = 0}^{n-1} \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} f(\sigma).
+        \sum_{\sigma \in S_n} f(\sigma_<) =
+        \sum_{\sigma \in S_n} f(\sigma_>) =
+            \sum_{k = 0}^{n-1} \frac{(n-1)!}{k!} \sum_{\sigma \in S_k} f(\sigma).
         \label{eq:sum-partitions}
     \end{equation}
 \end{lemma}
 
 \begin{proof}
-    Primeiro,
-    observe que toda permutação $\tau \in S_k$, para $k < n$,
+    Primeiro, mostraremos que o primeiro valor é igual ao último.
+
+    Observe que toda permutação $\tau \in S_k$, para $k < n$,
     é $\sigma_<$ para algum $\sigma \in S_n$
     (basta escolher, por exemplo,
     a sequência $(k+1, \tau(1), \dots, \tau(k), k+2, k+3, \dots, n)$);
     portanto,
-    a forma do somatório do lado direito da equação~\ref{eq:sum-partitions} está certa.
+    a forma do último somatório da equação~\ref{eq:sum-partitions} está certa.
     Falta verificar a constante $(n-1)!/k!$ de cada termo.
 
     Esta constante refere-se a quantas permutações $\sigma \in S_n$
@@ -135,4 +101,6 @@ O seguinte lema diz como.
     todas as $(n - k - 1)!$ permutações são válidas.
     Assim, o número total de permutações $\sigma \in S_n$
     tal que $\sigma_< = \tau$ é $\binom{n-1}{k} (n-k-1)! = (n-1)!/k!$.
+
+    A igualdade entre o termo do meio e o último termo é análoga.
 \end{proof}
