@@ -19,12 +19,12 @@ enquanto que apenas a permutação $(1, 2, 3)$ gera a árvore~%
 Portanto,
 concluímos que o número de árvores com $n$ nós
 é menor do que o número de permutações com $n$ elementos.
-
 Chame de $C_n$ o número de árvores binárias com $n$ nós;
-vamos montar uma relação de recorrência para $C_n$.\footnote{
+nesta seção, derivaremos uma fórmula fechada para $C_n$.\footnote{
     Essa derivação foi baseada em~\cite[p.~125]{SedgewickFlajolet2013}.
 }
 
+Montaremos uma relação de recorrência para $C_n$.
 Temos $C_0 = 1$, pois existe uma única árvore sem nós --- a árvore vazia\footnote{
     Se levarmos em consideração os nós externos da árvore,
     esta árvore é composta de um único nó externo.
@@ -70,7 +70,7 @@ Assim, teremos
 \begin{align*}
     \frac 1 2 - xf(x) &= \sqrt{\frac 1 4 - x} \\
     xf(x) &= \frac 1 2 - \sqrt{\frac 1 4 - x} \\
-          &= \frac 1 2 (1 - (1 - 4x)^{1/2}).
+          &= \frac 1 2 \big(1 - (1 - 4x)^{1/2}\big).
 \end{align*}
 Agora, podemos expandir o termo $(1 - 4x)^{1/2}$
 usando a série binomial $(1 + u)^\alpha$ para $\alpha = 1/2$~\cite[p.~487]{Spivak1994}
