@@ -1,0 +1,124 @@
+\subsection{Teste de performance}
+Esta seção relata os resultados obtidos num teste de performance realizados com treaps.
+O objetivo era comparar treaps com árvores AVL e árvores RB.
+
+O teste foi escrito em \texttt{C++}.
+A implementação de treaps segue a descrita na seção anterior.
+Foram usados dois geradores de números aleatórios distintos:
+Mersenne Twister e Xorshift.
+(O Mersenne Twister é parte da biblioteca padrão do C++.
+O Xorshift foi desenvolvido por George Marsaglia \cite{Marsaglia2003}.)
+A implementação de árvores AVL segue o que foi visto em aula.
+Para árvores RB,
+foi usado a classe \texttt{std::set} da biblioteca padrão do \texttt{C++},
+que utiliza árvores RB.
+Os testes foram executados num processador Intel Core i5-2410M, 2.3 GHz,
+sob Ubuntu 15.04 (kernel Linux 3.19).
+O programa foi compilado com \texttt{g++ 4.9.2},
+com a \texttt{libstdc++} versão \texttt{3.4.19},
+usando a flag \texttt{-O3} para otimização.
+O código está disponível em \verb"github.com/royertiago/MAC6711-src".
+
+Cada teste foi repetido 12 vezes,
+usando sempre a mesma semente para os geradores de números aleatórios.
+A média foi calculada ignorando o menor e maior tempo de execução.
+Como o objetivo era apenas testar a performance do processo de balanceamento em si,
+em todos os casos a chave usada era apenas um \texttt{int}.
+
+Foram feitos três testes: o primeiro levando em conta apenas a inserção,
+o segundo levando em conta inserção e busca,
+e o terceiro levando em conta as três operações
+(inserção, remoção e busca).
+
+\subsubsection{Primeiro teste: Inserção}
+
+Este teste visava principalmente averiguar o tempo de construção da árvore,
+para cada tipo de árvore.
+Cada estrutura foi testada com $100\,000$ e $1\,000\,000$ valores distintos,
+inseridos em ordem aleatória, e em ordem crescente.
+Os resultados estão na Tabela~\ref{tab:insert}.
+Interessante notar que treaps foram mais rápidas do que as árvores balanceadas
+quando os elementos foram inseridos em ordem.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l c c c c}
+        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
+            & AVL & RB & MT & Xorshift \\
+        \midrule
+        $100\,000$ valores aleatórios & 56.1 & 46.3 & 49.9 & 44.2 \\
+        $1\,000\,000$ valores aleatórios & 1166.6 & 934.9 & 1306.1 & 1174.8 \\
+        $100\,000$ em ordem crescente & 19.3 & 19.8 & 10.6 & 13.7 \\
+        $1\,000\,000$ em ordem crescente & 297.5 & 312.1 & 113.4 & 112.7 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tempo médio (em milissegundos) para a construção da árvore.}
+    \label{tab:insert}
+\end{table}
+
+\subsubsection{Segundo teste: Inserção e Busca}
+
+Este teste continua o anterior,
+estendendo-o com $80\,000$ buscas por elementos que estão na árvore
+e $40\,00$ elementos que não estão, para $100\,000$ valores,
+e $800\,000$ e $400\,000$, respectivamente, para $1\,000\,000$ valores.
+Os resultados estão na Tabela~\ref{tab:insert-remove}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l c c c c}
+        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
+            & AVL & RB & MT & Xorshift \\
+        \midrule
+        $100\,000$ valores aleatórios & 357.2 & 465.2 & 426.1 & 424.2 \\
+        $1\,000\,000$ valores aleatórios & 2108.4 & 1946.9 & 2706.2 & 2686.8 \\
+        $100\,000$ em ordem crescente & 331.0 & 501.8 & 442.7 & 513.5 \\
+        $1\,000\,000$ em ordem crescente & 1409.1 & 1693.2 & 1270.6 & 1196.0 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tempo médio (em milissegundos) para a construção e busca.}
+    \label{tab:insert-remove}
+\end{table}
+
+Aqui, a busca expôs a fraqueza das treaps:
+sua altura esperada é aproximadamente $3 \log_2 n$,
+muito maior do que o $2\log_2 n$ das árvores RB
+e $1.44 \log_2 n$ das árvores AVL.
+
+\subsubsection{Terceiro teste: Inserção, Remoção e Busca}
+
+O teste anterior foi estendido com a remoção de $50\,000$ elementos
+para o primeiro caso e $500\,000$ para o segundo.
+Foram feitos dois cenários distintos.
+No primeiro, todos os valores são inseridos de uma vez só,
+depois todos os valores que precisam ser removidos o são,
+e só então são efetuadas as buscas.
+No segundo cenário, após a inserção de metade dos valores,
+as demais operações se deram em sequência aleatória.
+Os resultados estão na Tabela~\ref{tab:mixed}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l c c c c}
+        & & & \multicolumn{2}{c}{Treap} \\ \cmidrule{4-5}
+            & AVL & RB & MT & Xorshift \\
+        \midrule
+        $270\,000$ operações, em sequência & 112.4 & 110.6 & 105.3 & 91.9 \\
+        $2\,700\,000$ operações, em sequência & 2586.8 & 2246.1 & 3260.0 & 2754.9 \\
+        $270\,000$ operações, aleatórias & 71.3 & 69.1 & 70.4 & 70.3 \\
+        $2\,700\,000$ operações, aleatórias & 2897.0 & 2420.0 & 2774.9 & 2648.3 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tempo médio (em milissegundos) para a construção e busca.}
+    \label{tab:mixed}
+\end{table}
+
+Com $1\,000\,000$ elementos,
+treaps foram mais lentas para a inserção em sequência.
+Mas, para operações aleatórias,
+treaps foram mais rápidas do que as árvores AVL.
+Isso não foi suficiente para superar a implementação de árvores RB da \texttt{libstdc++}.
+Estas observações são contrárias às encontradas por Heger \cite[p.65]{Heger2004};
+possivelmente,
+uma implementação mais cuidadosa de treaps
+possa superar o desempenho de árvores RB.
